@@ -1,0 +1,25 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - 'spec/dummy/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/ClassLength:
+  Max: 200
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/AccessModifierDeclarations:
+  Enabled: false

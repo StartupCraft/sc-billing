@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: postgres:10.1
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pg-data:/var/lib/postgresql/data
+
+  app: &app
+    image: startupcraftio/ruby:2.5
+    command: bash
+    volumes:
+      - .:/app
+      - bundler-data:/usr/local/bundle/:cached
+      - bin-data:/usr/local/bin/:cached
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-test}
+    depends_on:
+      - db
+
+volumes:
+  bundler-data:
+  bin-data:
+  pg-data:
