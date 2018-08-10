@@ -4,10 +4,10 @@ module SC::Billing::Webhooks
   class StripeAction
     include Dry::Transaction
 
-    # TODO: make congfigurable
     OPERATIONS_BY_EVENT_TYPE = {
       'customer.created' => ::SC::Billing::Stripe::Customers::CreateOperation,
-      'customer.updated' => ::SC::Billing::Stripe::Customers::UpdateOperation
+      'customer.updated' => ::SC::Billing::Stripe::Customers::UpdateOperation,
+      'product.created' => ::SC::Billing::Stripe::Products::CreateOperation
     }.freeze
 
     try :construct_event, catch: [JSON::ParserError, ::Stripe::SignatureVerificationError]
