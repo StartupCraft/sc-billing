@@ -6,7 +6,9 @@ module SC
       isolate_namespace SC::Billing
 
       initializer :append_migrations do |app|
-        app.config.paths['db/migrate'] += config.paths['db/migrate'].expanded unless app.root.to_s.match?(root.to_s)
+        config.paths['db/migrate'].expanded.each do |expanded_path|
+          app.config.paths['db/migrate'] << expanded_path
+        end
       end
 
       config.generators do |g|

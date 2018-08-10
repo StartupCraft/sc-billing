@@ -6,6 +6,9 @@ require File.expand_path('dummy/config/environment.rb', __dir__)
 require 'rspec/rails'
 require 'factory_bot_rails'
 require 'pry'
+require 'stripe_mock'
+require 'ffaker'
+require 'database_cleaner'
 
 Rails.backtrace_cleaner.remove_silencers!
 
@@ -13,6 +16,19 @@ Rails.backtrace_cleaner.remove_silencers!
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation, except: %w[spatial_ref_sys])
+  end
+
+  config.around do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+
   config.infer_spec_type_from_file_location!
 
   config.expect_with :rspec do |expectations|

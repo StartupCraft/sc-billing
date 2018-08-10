@@ -1,0 +1,1 @@
+/app/db/migrate/20180801153513_add_stripe_customer_id_to_users.rb
