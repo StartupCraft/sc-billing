@@ -1,20 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe SC::Billing::Stripe::Customers::UpdateOperation do
+RSpec.describe SC::Billing::Stripe::Customers::UpdateOperation, :stripe do
   subject(:call) do
     described_class.new.call(event)
   end
 
   let(:event) { StripeMock.mock_webhook_event('customer.updated') }
   let(:customer) { event.data.object }
-
-  around do |example|
-    StripeMock.start
-
-    example.run
-
-    StripeMock.stop
-  end
 
   context 'when customer exists' do
     let!(:user) { create(:user, stripe_customer_id: customer.id) }

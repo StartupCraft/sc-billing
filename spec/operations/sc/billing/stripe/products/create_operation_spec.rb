@@ -1,20 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe SC::Billing::Stripe::Products::CreateOperation do
+RSpec.describe SC::Billing::Stripe::Products::CreateOperation, :stripe do
   subject(:call) do
     described_class.new.call(event)
   end
 
   let(:event) { StripeMock.mock_webhook_event('product.created') }
   let(:product) { event.data.object }
-
-  around do |example|
-    StripeMock.start
-
-    example.run
-
-    StripeMock.stop
-  end
 
   context 'when product already exists' do
     before do

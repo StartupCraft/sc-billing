@@ -16,6 +16,7 @@ Rails.backtrace_cleaner.remove_silencers!
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
+  config.include_context 'with stripe mock', :stripe
   config.include FactoryBot::Syntax::Methods
 
   config.before(:suite) do
