@@ -40,5 +40,34 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
         expect(operation).to have_received(:call).with(event)
       end
     end
+
+    context 'when handler configured outside of gem' do
+      let(:event) { StripeMock.mock_webhook_event('customer.created') }
+      let(:operation) { instance_double(::Customers::CreateOperation) }
+
+      before do
+        allow(::Customers::CreateOperation).to receive(:new).and_return(operation)
+        allow(operation).to receive(:call)
+      end
+
+      around do |example|
+        SC::Billing.configure do |config|
+          config.custom_event_handlers = {
+            'customer.created' => ::Customers::CreateOperation
+          }
+        end
+
+        example.run
+
+        SC::Billing.configure do |config|
+          config.custom_event_handlers = {}
+        end
+      end
+
+      it 'execute proper operation', :aggregate_failures do
+        expect(result).to be_success
+        expect(operation).to have_received(:call).with(event)
+      end
+    end
   end
 end

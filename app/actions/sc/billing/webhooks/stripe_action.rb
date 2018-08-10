@@ -12,6 +12,8 @@ module SC::Billing::Webhooks
     try :construct_event, catch: [JSON::ParserError, ::Stripe::SignatureVerificationError]
     step :handle
 
+    private
+
     def construct_event(request)
       ::Stripe::Webhook.construct_event(
         request.body.read,
@@ -21,12 +23,20 @@ module SC::Billing::Webhooks
     end
 
     def handle(event)
-      operation = OPERATIONS_BY_EVENT_TYPE[event.type]
+      operation = choose_operation(event)
       return Failure(false) unless operation.present?
 
       operation.new.call(event)
 
       Success(true)
+    end
+
+    def choose_operation(event)
+      if ::SC::Billing.custom_event_handlers.key?(event.type)
+        ::SC::Billing.custom_event_handlers[event.type]
+      else
+        OPERATIONS_BY_EVENT_TYPE[event.type]
+      end
     end
   end
 end
