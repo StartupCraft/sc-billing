@@ -3,6 +3,7 @@ SC::Billing.configure do |config|
   config.available_events = [
     'customer.created',
     'customer.updated',
-    'product.created'
+    'product.created',
+    'plan.created'
   ]
 end
