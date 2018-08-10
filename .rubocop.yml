@@ -29,6 +29,7 @@ Style/AccessModifierDeclarations:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
+    - db/migrate/*.rb
 
 RSpec/ExampleLength:
   Enabled: false
