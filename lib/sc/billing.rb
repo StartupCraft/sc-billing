@@ -13,6 +13,7 @@ module SC
     setting :stripe_webhook_secret, reader: true
     setting :user_model_name, reader: true
     setting :custom_event_handlers, {}, reader: true
+    setting :available_events, [], reader: true
 
     class << self
       def user_model

@@ -32,11 +32,17 @@ module SC::Billing::Webhooks
     end
 
     def choose_operation(event)
+      return nil unless available_event?(event)
+
       if ::SC::Billing.custom_event_handlers.key?(event.type)
         ::SC::Billing.custom_event_handlers[event.type]
       else
         OPERATIONS_BY_EVENT_TYPE[event.type]
       end
+    end
+
+    def available_event?(event)
+      ::SC::Billing.available_events.include?(event.type)
     end
   end
 end
