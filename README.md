@@ -21,6 +21,13 @@ Or install it yourself as:
 $ gem install sc-billing
 ```
 
+## TODO
+
+* fill README
+* add rake tasks(sync products, plans, subscriptions)
+* add cancel subscription action
+* add payment source actions(pure classes to call ?)
+
 ## Contributing
 Contribution directions go here.
 
