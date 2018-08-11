@@ -12,6 +12,9 @@ Sequel.migration do
       foreign_key :product_id, :products, null: false, index: true
 
       unique :stripe_id
+
+      DateTime :created_at, null: false, default: Sequel::CURRENT_TIMESTAMP
+      DateTime :updated_at, null: false, default: Sequel::CURRENT_TIMESTAMP
     end
   end
 end
