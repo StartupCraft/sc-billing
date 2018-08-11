@@ -6,6 +6,7 @@ SC::Billing.configure do |config|
     'product.created',
     'plan.created',
     'plan.updated',
-    'customer.source.created'
+    'customer.source.created',
+    'customer.source.updated'
   ]
 end
