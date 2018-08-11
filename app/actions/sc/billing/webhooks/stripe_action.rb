@@ -14,7 +14,8 @@ module SC::Billing::Webhooks
       'customer.source.updated' => ::SC::Billing::Stripe::Customers::Sources::UpdateOperation,
       'customer.source.deleted' => ::SC::Billing::Stripe::Customers::Sources::DeleteOperation,
       'customer.subscription.created' => ::SC::Billing::Stripe::Customers::Subscriptions::CreateOperation,
-      'customer.subscription.updated' => ::SC::Billing::Stripe::Customers::Subscriptions::UpdateOperation
+      'customer.subscription.updated' => ::SC::Billing::Stripe::Customers::Subscriptions::UpdateOperation,
+      'customer.subscription.deleted' => ::SC::Billing::Stripe::Customers::Subscriptions::DeleteOperation
     }.freeze
 
     try :construct_event, catch: [JSON::ParserError, ::Stripe::SignatureVerificationError]

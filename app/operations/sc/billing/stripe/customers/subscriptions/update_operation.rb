@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SC::Billing::Stripe::Customers::Subscriptions
-  class UpdateOperation < CreateOperation
+  class UpdateOperation < ::SC::Billing::Stripe::Customers::Subscriptions::CreateOperation
     include ::SC::Billing::Import['helpers.from_timestamp_to_time']
 
     def call(event)

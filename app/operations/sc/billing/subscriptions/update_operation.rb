@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SC::Billing::Subscriptions
-  class UpdateOperation < CreateOperation
+  class UpdateOperation < ::SC::Billing::Subscriptions::CreateOperation
     attr_accessor :subscription
     private       :subscription
 
