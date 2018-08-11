@@ -9,7 +9,8 @@ module SC::Billing::Webhooks
       'customer.updated' => ::SC::Billing::Stripe::Customers::UpdateOperation,
       'product.created' => ::SC::Billing::Stripe::Products::CreateOperation,
       'plan.created' => ::SC::Billing::Stripe::Plans::CreateOperation,
-      'plan.updated' => ::SC::Billing::Stripe::Plans::UpdateOperation
+      'plan.updated' => ::SC::Billing::Stripe::Plans::UpdateOperation,
+      'customer.source.created' => ::SC::Billing::Stripe::Customers::Sources::CreateOperation
     }.freeze
 
     try :construct_event, catch: [JSON::ParserError, ::Stripe::SignatureVerificationError]
