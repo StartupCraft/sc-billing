@@ -19,7 +19,9 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['spec/**/*']
 
+  s.add_dependency 'dry-auto_inject', '>= 0.4'
   s.add_dependency 'dry-configurable', '>= 0.7'
+  s.add_dependency 'dry-container', '>= 0.6'
   s.add_dependency 'dry-transaction', '>= 0.10'
   s.add_dependency 'pg', '>= 0.20'
   s.add_dependency 'rails', '>= 5.1', '< 6.0'

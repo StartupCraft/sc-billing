@@ -3,8 +3,12 @@
 require 'sc/billing/railtie'
 require 'sc/billing/engine'
 
+require 'dry-auto_inject'
+require 'dry-container'
 require 'dry-transaction'
 require 'stripe'
+
+require 'sc/billing/import'
 
 module SC
   module Billing
