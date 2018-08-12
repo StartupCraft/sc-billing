@@ -14,3 +14,7 @@ end
 RSpec.describe 'sc:billing:stripe:sync_products', type: :task do
   it_behaves_like 'calls proper service inside task', ::SC::Billing::Stripe::SyncProductsService
 end
+
+RSpec.describe 'sc:billing:stripe:sync_plans', type: :task do
+  it_behaves_like 'calls proper service inside task', ::SC::Billing::Stripe::SyncPlansService
+end

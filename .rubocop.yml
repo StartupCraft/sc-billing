@@ -37,3 +37,7 @@ RSpec/ExampleLength:
 RSpec/DescribeClass:
   Exclude:
     - spec/lib/tasks/**/*.rb
+
+RSpec/MultipleDescribes:
+  Exclude:
+    - spec/lib/tasks/**/*.rb

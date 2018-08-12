@@ -7,6 +7,10 @@ namespace :sc do
       task sync_products: :environment do
         ::SC::Billing::Stripe::SyncProductsService.new.call
       end
+
+      task sync_plans: :environment do
+        ::SC::Billing::Stripe::SyncPlansService.new.call
+      end
     end
   end
 end
