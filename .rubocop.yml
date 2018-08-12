@@ -33,3 +33,7 @@ Metrics/BlockLength:
 
 RSpec/ExampleLength:
   Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - spec/lib/tasks/**/*.rb
