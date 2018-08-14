@@ -14,7 +14,7 @@ module SC::Billing::Stripe::Subscriptions
     end
 
     def actualize_subscription(subscription, subscription_data)
-      ::SC::Billing::Stripe::Subscriptions::UpdateOperation.new(subscription: subscription).call(subscription_data)
+      ::SC::Billing::Subscriptions::UpdateOperation.new(subscription: subscription).call(subscription_data)
     end
   end
 end
