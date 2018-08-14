@@ -21,11 +21,11 @@ module SC::Billing::Stripe
     end
 
     def create_subscription(data)
-      ::SC::Billing::Stripe::Customers::Subscriptions::CreateOperation.new.call(data)
+      ::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation.new.call(data)
     end
 
     def actualize_subscription(data)
-      ::SC::Billing::Stripe::Customers::Subscriptions::UpdateOperation.new.call(data)
+      ::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation.new.call(data)
     end
   end
 end

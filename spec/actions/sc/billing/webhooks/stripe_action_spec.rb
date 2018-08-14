@@ -57,10 +57,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event in list of available events' do
       let(:event) { StripeMock.mock_webhook_event('customer.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::CreateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -84,10 +84,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event not in list of available events' do
       let(:event) { StripeMock.mock_webhook_event('customer.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::CreateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -111,10 +111,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.created' do
       let(:event) { StripeMock.mock_webhook_event('customer.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::CreateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -126,10 +126,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.updated' do
       let(:event) { StripeMock.mock_webhook_event('customer.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::UpdateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::UpdateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::UpdateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::UpdateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -141,10 +141,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is product.created' do
       let(:event) { StripeMock.mock_webhook_event('product.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Products::CreateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Products::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Products::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Products::CreateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -156,10 +156,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is plan.created' do
       let(:event) { StripeMock.mock_webhook_event('plan.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Plans::CreateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Plans::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Plans::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Plans::CreateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -171,10 +171,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is plan.updated' do
       let(:event) { StripeMock.mock_webhook_event('plan.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Plans::UpdateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Plans::UpdateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Plans::UpdateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Plans::UpdateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -186,10 +186,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.source.created' do
       let(:event) { StripeMock.mock_webhook_event('customer.source.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::Sources::CreateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::Sources::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -201,10 +201,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.source.updated' do
       let(:event) { StripeMock.mock_webhook_event('customer.source.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::Sources::UpdateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::Sources::UpdateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -216,10 +216,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.source.deleted' do
       let(:event) { StripeMock.mock_webhook_event('customer.source.deleted') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::Sources::DeleteOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::Sources::DeleteOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -231,10 +231,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.subscription.created' do
       let(:event) { StripeMock.mock_webhook_event('customer.subscription.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::Subscriptions::CreateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::Subscriptions::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -246,10 +246,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.subscription.updated' do
       let(:event) { StripeMock.mock_webhook_event('customer.subscription.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::Subscriptions::UpdateOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::Subscriptions::UpdateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
@@ -261,10 +261,10 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
 
     context 'when event is customer.subscription.deleted' do
       let(:event) { StripeMock.mock_webhook_event('customer.subscription.deleted') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Customers::Subscriptions::DeleteOperation) }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Customers::Subscriptions::DeleteOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation).to receive(:new).and_return(operation)
         allow(operation).to receive(:call)
       end
 
