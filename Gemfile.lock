@@ -210,7 +210,7 @@ GEM
       sprockets (>= 3.0.0)
     stripe (3.19.0)
       faraday (~> 0.10)
-    stripe-ruby-mock (2.5.4)
+    stripe-ruby-mock (2.5.3)
       dante (>= 0.2.0)
       multi_json (~> 1.0)
       stripe (>= 2.0.3)
@@ -240,7 +240,7 @@ DEPENDENCIES
   rubocop-rspec (~> 1.27)
   sc-billing!
   sequel-rails (~> 1.0)
-  stripe-ruby-mock (~> 2.5)
+  stripe-ruby-mock (= 2.5.3)
   webmock (~> 3.0)
 
 BUNDLED WITH
