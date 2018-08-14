@@ -5,6 +5,7 @@ PATH
       dry-auto_inject (>= 0.4)
       dry-configurable (>= 0.7)
       dry-container (>= 0.6)
+      dry-monads (>= 1.0)
       dry-transaction (>= 0.10)
       pg (>= 0.20)
       rails (>= 5.1, < 6.0)
