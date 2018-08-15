@@ -20,7 +20,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Sources
       user = payment_source.user
 
       ::SC::Billing::Stripe::PaymentSource.db.transaction do
-        user.update(default_stripe_payment_source: nil) if payment_source_is_default?(user, payment_source)
+        user.update(default_payment_source: nil) if payment_source_is_default?(user, payment_source)
         payment_source.destroy
       end
     end

@@ -16,7 +16,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperatio
 
     context 'when payment source is default payment source for user' do
       before do
-        payment_source.user.update(default_stripe_payment_source: payment_source)
+        payment_source.user.update(default_payment_source: payment_source)
       end
 
       it 'deletes payment source' do

@@ -11,7 +11,7 @@ RSpec.describe SC::Billing::Stripe::PaymentSources::MakeDefaultOperation, :strip
   let!(:payment_source) { create(:stripe_payment_source, user: user, stripe_id: stripe_payment_source.id) }
 
   it 'makes default payment source', :aggregate_failures do
-    expect { call }.to change { user.reload.default_stripe_payment_source }.to(payment_source)
+    expect { call }.to change { user.reload.default_payment_source }.to(payment_source)
 
     is_expected.to be_success
   end

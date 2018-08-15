@@ -7,7 +7,7 @@ FactoryBot.define do
     email { FFaker::Internet.email }
 
     trait :with_payment_source do
-      association :default_stripe_payment_source, factory: :stripe_payment_source
+      association :default_payment_source, factory: :stripe_payment_source
     end
   end
 end

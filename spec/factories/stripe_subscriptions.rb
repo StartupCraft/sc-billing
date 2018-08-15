@@ -7,7 +7,7 @@ FactoryBot.define do
     user
     stripe_id { SecureRandom.hex }
     status 'active'
-    current_period_start_at { FFaker::Time.datetime }
+    current_period_start_at { FFaker::Time.datetime.to_datetime }
     current_period_end_at { current_period_start_at + 1.month }
     stripe_data { {}.to_json }
 
