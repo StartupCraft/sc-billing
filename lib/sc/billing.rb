@@ -15,6 +15,7 @@ module SC
   module Billing
     extend Dry::Configurable
 
+    setting :stripe_api_key, reader: true
     setting :stripe_webhook_secret, reader: true
     setting :user_model_name, reader: true
     setting :custom_event_handlers, {}, reader: true
