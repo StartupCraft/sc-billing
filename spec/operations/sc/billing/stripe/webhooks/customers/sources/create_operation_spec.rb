@@ -13,12 +13,12 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperatio
     end
 
     it 'creates new payment source' do
-      expect { result }.to change(::SC::Billing::PaymentSource, :count).by(1)
+      expect { result }.to change(::SC::Billing::Stripe::PaymentSource, :count).by(1)
     end
 
     context 'when payment source already exists' do
       before do
-        create(:payment_source, stripe_id: event.data.object.id)
+        create(:stripe_payment_source, stripe_id: event.data.object.id)
       end
 
       it 'does not do anything' do

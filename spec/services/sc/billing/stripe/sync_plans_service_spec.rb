@@ -27,21 +27,21 @@ RSpec.describe SC::Billing::Stripe::SyncPlansService, :stripe do
 
     context 'when plans do not exists' do
       before do
-        create(:product, stripe_id: 'prod_1')
+        create(:stripe_product, stripe_id: 'prod_1')
       end
 
       it 'creates plans' do
-        expect { call }.to change(::SC::Billing::Plan, :count).by(1)
+        expect { call }.to change(::SC::Billing::Stripe::Plan, :count).by(1)
       end
     end
 
     context 'when plans already exists' do
       before do
-        create(:plan, stripe_id: 'management', name: 'Management')
+        create(:stripe_plan, stripe_id: 'management', name: 'Management')
       end
 
       it 'not creates plans' do
-        expect { call }.not_to change(::SC::Billing::Plan, :count)
+        expect { call }.not_to change(::SC::Billing::Stripe::Plan, :count)
       end
     end
   end

@@ -15,7 +15,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     private
 
     def find_subscription(subscription_id)
-      ::SC::Billing::Subscription.first(stripe_id: subscription_id)
+      ::SC::Billing::Stripe::Subscription.first(stripe_id: subscription_id)
     end
 
     def update_subscription(subscription, subscription_data)

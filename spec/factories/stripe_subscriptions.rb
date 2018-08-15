@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :subscription, class: 'SC::Billing::Subscription' do
+  factory :stripe_subscription, class: 'SC::Billing::Stripe::Subscription' do
     to_create(&:save)
 
     user

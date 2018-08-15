@@ -8,7 +8,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Plans::UpdateOperation, :stripe do
   let(:event) { StripeMock.mock_webhook_event('plan.updated') }
   let(:plan_data) { event.data.object }
 
-  let!(:plan) { create(:plan, stripe_id: plan_data.id) }
+  let!(:plan) { create(:stripe_plan, stripe_id: plan_data.id) }
 
   it 'updates plan' do
     expect { call }.to(

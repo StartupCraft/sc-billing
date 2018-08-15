@@ -37,7 +37,7 @@ module SC::Billing::Stripe::PaymentSources
         stripe_data: data.as_json
       }
 
-      ::SC::Billing::PaymentSource.create(params.merge(extra_params))
+      ::SC::Billing::Stripe::PaymentSource.create(params.merge(extra_params))
     end
   end
 end

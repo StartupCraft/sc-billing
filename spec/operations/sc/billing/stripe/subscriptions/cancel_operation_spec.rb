@@ -8,7 +8,7 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CancelOperation, :stripe do
   let(:stripe_customer) { Stripe::Customer.create(source: stripe_helper.generate_card_token) }
   let(:stripe_subscription) { Stripe::Subscription.create(customer: stripe_customer.id) }
   let(:user) { create(:user, stripe_customer_id: stripe_customer.id) }
-  let(:subscription) { create(:subscription, user: user, stripe_id: stripe_subscription.id) }
+  let(:subscription) { create(:stripe_subscription, user: user, stripe_id: stripe_subscription.id) }
 
   it 'cancels subscription' do
     expect { call }.to(change { subscription.reload.status }.to('canceled'))

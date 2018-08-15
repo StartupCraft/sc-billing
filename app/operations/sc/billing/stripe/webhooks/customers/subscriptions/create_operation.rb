@@ -29,7 +29,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     end
 
     def find_entities_by_stripe_ids(type:, stripe_ids:)
-      type_class = "SC::Billing::#{type.to_s.classify}".constantize
+      type_class = "SC::Billing::Stripe::#{type.to_s.classify}".constantize
 
       type_class.where(stripe_id: stripe_ids).all.tap do |entities|
         raise "There is no enough #{type.to_s.pluralize} in system" if entities.size != stripe_ids.size

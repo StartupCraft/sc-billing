@@ -8,10 +8,10 @@ RSpec.describe SC::Billing::Stripe::PaymentSources::MakeDefaultOperation, :strip
   let(:stripe_customer) { Stripe::Customer.create }
   let(:user) { create(:user, stripe_customer_id: stripe_customer.id) }
   let(:stripe_payment_source) { stripe_customer.sources.create(source: stripe_helper.generate_card_token) }
-  let!(:payment_source) { create(:payment_source, user: user, stripe_id: stripe_payment_source.id) }
+  let!(:payment_source) { create(:stripe_payment_source, user: user, stripe_id: stripe_payment_source.id) }
 
   it 'makes default payment source', :aggregate_failures do
-    expect { call }.to change { user.reload.default_payment_source }.to(payment_source)
+    expect { call }.to change { user.reload.default_stripe_payment_source }.to(payment_source)
 
     is_expected.to be_success
   end

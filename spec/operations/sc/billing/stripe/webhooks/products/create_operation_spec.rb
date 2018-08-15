@@ -10,7 +10,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Products::CreateOperation, :stripe
 
   context 'when product already exists' do
     before do
-      create(:product, stripe_id: product.id)
+      create(:stripe_product, stripe_id: product.id)
     end
 
     it 'not raise error' do
@@ -20,7 +20,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Products::CreateOperation, :stripe
 
   context 'when product does not exist' do
     it 'creates product', :aggregate_failures do
-      expect { call }.to change(::SC::Billing::Product, :count).by(1)
+      expect { call }.to change(::SC::Billing::Stripe::Product, :count).by(1)
     end
   end
 end

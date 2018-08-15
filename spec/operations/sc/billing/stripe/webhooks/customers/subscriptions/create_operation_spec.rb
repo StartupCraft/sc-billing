@@ -20,9 +20,9 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOp
 
     context 'when not all products exist in system' do
       before do
-        create(:plan, name: 'Community', stripe_id: 'community')
-        create(:plan, name: 'Jobs', stripe_id: 'jobs')
-        create(:plan, name: 'Management', stripe_id: 'management')
+        create(:stripe_plan, name: 'Community', stripe_id: 'community')
+        create(:stripe_plan, name: 'Jobs', stripe_id: 'jobs')
+        create(:stripe_plan, name: 'Management', stripe_id: 'management')
       end
 
       it 'raises error' do
@@ -32,22 +32,22 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOp
 
     context 'when plans and products exist in system' do
       before do
-        create(:plan, name: 'Community', stripe_id: 'community')
-        create(:plan, name: 'Jobs', stripe_id: 'jobs')
-        create(:plan, name: 'Management', stripe_id: 'management')
+        create(:stripe_plan, name: 'Community', stripe_id: 'community')
+        create(:stripe_plan, name: 'Jobs', stripe_id: 'jobs')
+        create(:stripe_plan, name: 'Management', stripe_id: 'management')
 
-        create(:product, name: 'Community', stripe_id: 'prod_CaU68FIxzsRMPa')
-        create(:product, name: 'Jobs', stripe_id: 'prod_CaU6kvMMYsMPsC')
-        create(:product, name: 'Management', stripe_id: 'prod_CZ1Eu8jADpfJtt')
+        create(:stripe_product, name: 'Community', stripe_id: 'prod_CaU68FIxzsRMPa')
+        create(:stripe_product, name: 'Jobs', stripe_id: 'prod_CaU6kvMMYsMPsC')
+        create(:stripe_product, name: 'Management', stripe_id: 'prod_CZ1Eu8jADpfJtt')
       end
 
       it 'creates subscription', :aggregate_failures do
         expect { result }.to(
-          change(::SC::Billing::Subscription, :count).by(1)
-          .and(change(::SC::Billing::SubscribedPlan, :count).by(3))
+          change(::SC::Billing::Stripe::Subscription, :count).by(1)
+          .and(change(::SC::Billing::Stripe::SubscribedPlan, :count).by(3))
         )
 
-        created_subscription = ::SC::Billing::Subscription.last
+        created_subscription = ::SC::Billing::Stripe::Subscription.last
         expect(created_subscription.status).to eq('active')
         expect(created_subscription.stripe_id).not_to be_nil
         expect(created_subscription.stripe_data).not_to be_nil

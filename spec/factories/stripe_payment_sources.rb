@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :payment_source, class: 'SC::Billing::PaymentSource' do
+  factory :stripe_payment_source, class: 'SC::Billing::Stripe::PaymentSource' do
     to_create(&:save)
 
     object 'card'

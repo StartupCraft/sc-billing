@@ -1,1 +1,0 @@
-/app/db/migrate/20180811114449_create_subscriptions.rb

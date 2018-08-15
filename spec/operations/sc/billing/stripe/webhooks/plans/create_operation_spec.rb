@@ -10,7 +10,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Plans::CreateOperation, :stripe do
 
   context 'when plan already exists' do
     before do
-      create(:plan, stripe_id: plan.id)
+      create(:stripe_plan, stripe_id: plan.id)
     end
 
     it 'not raise error' do
@@ -24,12 +24,12 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Plans::CreateOperation, :stripe do
     end
 
     context 'when product exists in system' do
-      let!(:product) { create(:product, stripe_id: 'prod_Cmpsds2X8lxkG0') }
+      let!(:product) { create(:stripe_product, stripe_id: 'prod_Cmpsds2X8lxkG0') }
 
       it 'creates plan', :aggregate_failures do
-        expect { call }.to change(::SC::Billing::Plan, :count).by(1)
+        expect { call }.to change(::SC::Billing::Stripe::Plan, :count).by(1)
 
-        created_plan = ::SC::Billing::Plan.last
+        created_plan = ::SC::Billing::Stripe::Plan.last
         expect(created_plan.product).to eq(product)
         expect(created_plan.amount).to eq(3400)
         expect(created_plan.currency).to eq('usd')

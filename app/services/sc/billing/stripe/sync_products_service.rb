@@ -9,9 +9,9 @@ module SC::Billing::Stripe
     private
 
     def create_if_not_exists(stripe_product)
-      return unless ::SC::Billing::Product.where(stripe_id: stripe_product.id).empty?
+      return unless ::SC::Billing::Stripe::Product.where(stripe_id: stripe_product.id).empty?
 
-      ::SC::Billing::Product.create(stripe_id: stripe_product.id, name: stripe_product.name)
+      ::SC::Billing::Stripe::Product.create(stripe_id: stripe_product.id, name: stripe_product.name)
     end
   end
 end

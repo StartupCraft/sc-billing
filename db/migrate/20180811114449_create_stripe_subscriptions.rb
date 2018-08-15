@@ -5,16 +5,16 @@ Sequel.migration do
     extension :pg_enum
 
     create_enum(
-      :subscriptions_statuses,
+      :stripe_subscriptions_statuses,
       %w[trialing active past_due canceled unpaid]
     )
 
-    create_table :subscriptions do
+    create_table :stripe_subscriptions do
       primary_key :id
 
       foreign_key :user_id, :users, null: false, index: true
 
-      subscriptions_statuses :status, null: false
+      stripe_subscriptions_statuses :status, null: false
       String :stripe_id, null: false
 
       DateTime :current_period_start_at, null: false

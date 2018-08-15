@@ -13,7 +13,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Sources
     private
 
     def find_payment_source(source_id)
-      ::SC::Billing::PaymentSource.find(stripe_id: source_id)
+      ::SC::Billing::Stripe::PaymentSource.find(stripe_id: source_id)
     end
 
     def update_payment_source(payment_source, source_data)

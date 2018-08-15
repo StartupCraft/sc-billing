@@ -12,11 +12,11 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::UpdateOperation, :strip
     let!(:user) { create(:user, stripe_customer_id: customer.id) }
 
     context 'when new default payment source is not empty' do
-      let!(:payment_source) { create(:payment_source, stripe_id: customer.default_source) }
+      let!(:payment_source) { create(:stripe_payment_source, stripe_id: customer.default_source) }
 
       it 'changes user', :aggregate_failures do
         expect { call }.to(
-          change { user.reload.default_payment_source }.to(payment_source)
+          change { user.reload.default_stripe_payment_source }.to(payment_source)
         )
       end
     end
@@ -30,7 +30,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::UpdateOperation, :strip
 
       it 'changes user' do
         expect { call }.to(
-          change { user.reload.default_payment_source }.to(nil)
+          change { user.reload.default_stripe_payment_source }.to(nil)
         )
       end
     end

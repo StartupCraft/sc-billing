@@ -19,7 +19,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Sources
     end
 
     def payment_source_exists?(source_id)
-      !::SC::Billing::PaymentSource.where(stripe_id: source_id).empty?
+      !::SC::Billing::Stripe::PaymentSource.where(stripe_id: source_id).empty?
     end
   end
 end

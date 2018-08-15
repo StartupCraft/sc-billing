@@ -33,7 +33,7 @@ module SC::Billing::Stripe::Subscriptions
     def find_plans(subscription_data)
       ids = subscription_data.items.data.map { |item| item.plan.id }
 
-      ::SC::Billing::Plan.where(stripe_id: ids)
+      ::SC::Billing::Stripe::Plan.where(stripe_id: ids)
     end
   end
 end

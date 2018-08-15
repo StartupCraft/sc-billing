@@ -10,7 +10,7 @@ RSpec.describe SC::Billing::Stripe::PaymentSources::CreateOperation, :stripe do
   let(:token) { stripe_helper.generate_card_token }
 
   it 'creates payment source', :aggregate_failures do
-    expect { call }.to change(::SC::Billing::PaymentSource, :count).by(1)
+    expect { call }.to change(::SC::Billing::Stripe::PaymentSource, :count).by(1)
 
     is_expected.to be_success
   end

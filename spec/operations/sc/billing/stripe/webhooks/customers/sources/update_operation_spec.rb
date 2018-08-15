@@ -8,7 +8,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperatio
   let(:event) { StripeMock.mock_webhook_event('customer.source.updated') }
 
   context 'when payment source exists' do
-    let!(:payment_source) { create(:payment_source, stripe_id: event.data.object.id) }
+    let!(:payment_source) { create(:stripe_payment_source, stripe_id: event.data.object.id) }
 
     it 'updates payment source' do
       expect { result }.to(change { payment_source.reload.stripe_data })

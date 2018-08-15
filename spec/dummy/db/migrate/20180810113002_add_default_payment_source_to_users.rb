@@ -1,1 +1,0 @@
-/app/db/migrate/20180810113002_add_default_payment_source_to_users.rb

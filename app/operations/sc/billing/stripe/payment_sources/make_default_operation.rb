@@ -25,7 +25,7 @@ module SC::Billing::Stripe::PaymentSources
     end
 
     def make_default_in_db(payment_source)
-      payment_source.user.update(default_payment_source: payment_source)
+      payment_source.user.update(default_stripe_payment_source: payment_source)
     end
   end
 end

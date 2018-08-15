@@ -2,14 +2,14 @@
 
 Sequel.migration do
   change do
-    create_table :plans do
+    create_table :stripe_plans do
       primary_key :id
 
       String :name, null: false
       String :stripe_id, null: false
       Integer :amount, null: false
       String :currency, null: false
-      foreign_key :product_id, :products, null: false, index: true
+      foreign_key :product_id, :stripe_products, null: false, index: true
 
       unique :stripe_id
 

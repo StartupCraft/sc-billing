@@ -1,1 +1,0 @@
-/app/db/migrate/20180810134910_create_products.rb

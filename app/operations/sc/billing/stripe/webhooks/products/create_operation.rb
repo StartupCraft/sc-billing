@@ -6,7 +6,7 @@ module SC::Billing::Stripe::Webhooks::Products
       product_data = event.data.object
       return if product_exists?(product_data)
 
-      ::SC::Billing::Product.create(
+      ::SC::Billing::Stripe::Product.create(
         stripe_id: product_data.id,
         name: product_data.name
       )
@@ -15,7 +15,7 @@ module SC::Billing::Stripe::Webhooks::Products
     private
 
     def product_exists?(product_data)
-      !::SC::Billing::Product.where(stripe_id: product_data.id).empty?
+      !::SC::Billing::Stripe::Product.where(stripe_id: product_data.id).empty?
     end
   end
 end

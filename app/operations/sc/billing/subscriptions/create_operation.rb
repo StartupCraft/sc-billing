@@ -5,7 +5,7 @@ module SC::Billing::Subscriptions
     include ::SC::Billing::Import['helpers.from_timestamp_to_time']
 
     def call(data, **extra_params)
-      ::SC::Billing::Subscription.create(subscription_params(data, extra_params))
+      ::SC::Billing::Stripe::Subscription.create(subscription_params(data, extra_params))
     end
 
     private

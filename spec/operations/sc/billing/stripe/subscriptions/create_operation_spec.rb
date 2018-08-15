@@ -10,7 +10,7 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CreateOperation, :stripe do
   let(:plan) { stripe_helper.create_plan }
 
   it 'creates payment source', :aggregate_failures do
-    expect { call }.to change(::SC::Billing::Subscription, :count).by(1)
+    expect { call }.to change(::SC::Billing::Stripe::Subscription, :count).by(1)
 
     is_expected.to be_success
   end

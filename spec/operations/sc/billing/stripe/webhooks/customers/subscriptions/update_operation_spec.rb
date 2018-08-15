@@ -18,7 +18,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOp
   context 'when subscription exists' do
     let!(:user) { create(:user, stripe_customer_id: 'cus_CcFlMeAV92yGep') }
     let!(:subscription) do
-      create(:subscription, :active, user: user, stripe_id: 'sub_CcFmXH410WdGp1')
+      create(:stripe_subscription, :active, user: user, stripe_id: 'sub_CcFmXH410WdGp1')
     end
 
     context 'when not all plans exist in sysmem' do
@@ -29,9 +29,9 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOp
 
     context 'when not all products exist in system' do
       before do
-        create(:plan, name: 'community', stripe_id: 'community')
-        create(:plan, name: 'jobs', stripe_id: 'jobs')
-        create(:plan, name: 'management', stripe_id: 'management')
+        create(:stripe_plan, name: 'community', stripe_id: 'community')
+        create(:stripe_plan, name: 'jobs', stripe_id: 'jobs')
+        create(:stripe_plan, name: 'management', stripe_id: 'management')
       end
 
       it 'raises error' do
@@ -41,21 +41,21 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOp
 
     context 'when plans exist in system' do
       before do
-        product = create(:product, name: 'Community', stripe_id: 'prod_CaU68FIxzsRMPa')
-        create(:plan, product: product, name: 'Community', stripe_id: 'community')
+        product = create(:stripe_product, name: 'Community', stripe_id: 'prod_CaU68FIxzsRMPa')
+        create(:stripe_plan, product: product, name: 'Community', stripe_id: 'community')
 
-        product = create(:product, name: 'Jobs', stripe_id: 'prod_CaU6kvMMYsMPsC')
-        create(:plan, product: product, name: 'jobs', stripe_id: 'jobs')
+        product = create(:stripe_product, name: 'Jobs', stripe_id: 'prod_CaU6kvMMYsMPsC')
+        create(:stripe_plan, product: product, name: 'jobs', stripe_id: 'jobs')
 
-        product = create(:product, name: 'management', stripe_id: 'prod_CZ1Eu8jADpfJtt')
-        create(:plan, product: product, name: 'Management', stripe_id: 'management')
+        product = create(:stripe_product, name: 'management', stripe_id: 'prod_CZ1Eu8jADpfJtt')
+        create(:stripe_plan, product: product, name: 'Management', stripe_id: 'management')
       end
 
       it 'updates subscription', :aggregate_failures do
         expect { result }.to(
-          change { subscription.reload.plans }.from([]).to(::SC::Billing::Plan.all)
+          change { subscription.reload.plans }.from([]).to(::SC::Billing::Stripe::Plan.all)
           .and(change { subscription.reload.status }.from('active').to('canceled'))
-          .and(change { subscription.reload.products }.from([]).to(::SC::Billing::Product.all))
+          .and(change { subscription.reload.products }.from([]).to(::SC::Billing::Stripe::Product.all))
           .and(change { subscription.reload.current_period_start_at })
           .and(change { subscription.reload.current_period_end_at })
           .and(not_change { subscription.reload.trial_start_at })

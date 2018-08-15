@@ -17,7 +17,7 @@ module SC::Billing::Stripe
     end
 
     def subscription_exists?(stripe_id)
-      !::SC::Billing::Subscription.where(stripe_id: stripe_id).empty?
+      !::SC::Billing::Stripe::Subscription.where(stripe_id: stripe_id).empty?
     end
 
     def create_subscription(data)

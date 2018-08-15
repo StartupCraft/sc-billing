@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :subscribed_plan, class: 'SC::Billing::SubscribedPlan' do
+  factory :stripe_subscribed_plan, class: 'SC::Billing::Stripe::SubscribedPlan' do
     to_create(&:save)
 
     subscription

@@ -5,12 +5,12 @@ Sequel.migration do
     extension :pg_enum
 
     create_enum(
-      :payment_sources_statuses,
+      :stripe_payment_sources_statuses,
       %w[canceled chargeable consumed failed pending]
     )
 
     create_enum(
-      :payment_sources_types,
+      :stripe_payment_sources_types,
       %w[
         ach_credit_transfer
         ach_debit
@@ -32,16 +32,16 @@ Sequel.migration do
     )
 
     create_enum(
-      :payment_sources_objects, %w[source card]
+      :stripe_payment_sources_objects, %w[source card]
     )
 
-    create_table :payment_sources do
+    create_table :stripe_payment_sources do
       primary_key :id
 
       String :stripe_id, null: false, unique: true
-      payment_sources_objects :object, null: false
-      payment_sources_types :type
-      payment_sources_statuses :status
+      stripe_payment_sources_objects :object, null: false
+      stripe_payment_sources_types :type
+      stripe_payment_sources_statuses :status
       Jsonb :stripe_data, null: false, default: '{}'
 
       foreign_key :user_id, :users, null: false, index: true
@@ -54,10 +54,10 @@ Sequel.migration do
   down do
     extension :pg_enum
 
-    drop_table(:payment_sources)
+    drop_table(:stripe_payment_sources)
 
-    drop_enum(:payment_sources_statuses)
-    drop_enum(:payment_sources_types)
-    drop_enum(:payment_sources_objects)
+    drop_enum(:stripe_payment_sources_statuses)
+    drop_enum(:stripe_payment_sources_types)
+    drop_enum(:stripe_payment_sources_objects)
   end
 end

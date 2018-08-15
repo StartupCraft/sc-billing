@@ -9,7 +9,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOp
 
   context 'when subscription exists' do
     let!(:user) { create(:user, stripe_customer_id: 'cus_CcFlMeAV92yGep') }
-    let!(:subscription) { create(:subscription, :active, user: user, stripe_id: 'sub_CcFmXH410WdGp1') }
+    let!(:subscription) { create(:stripe_subscription, :active, user: user, stripe_id: 'sub_CcFmXH410WdGp1') }
 
     it 'updates subscription', :aggregate_failures do
       expect { result }.to(

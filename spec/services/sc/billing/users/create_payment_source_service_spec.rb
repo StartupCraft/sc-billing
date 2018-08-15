@@ -13,7 +13,7 @@ RSpec.describe SC::Billing::Users::CreatePaymentSourceService do
       let(:stripe_data_object) { Stripe::Card.construct_from(id: '1', object: 'card') }
 
       it 'creates payment source', :aggregate_failures do
-        expect { call }.to change(::SC::Billing::PaymentSource, :count).by(1)
+        expect { call }.to change(::SC::Billing::Stripe::PaymentSource, :count).by(1)
 
         payment_source = call
         expect(payment_source.object).to eq('card')
@@ -29,7 +29,7 @@ RSpec.describe SC::Billing::Users::CreatePaymentSourceService do
       end
 
       it 'creates payment source', :aggregate_failures do
-        expect { call }.to change(::SC::Billing::PaymentSource, :count).by(1)
+        expect { call }.to change(::SC::Billing::Stripe::PaymentSource, :count).by(1)
 
         payment_source = call
         expect(payment_source.object).to eq('source')

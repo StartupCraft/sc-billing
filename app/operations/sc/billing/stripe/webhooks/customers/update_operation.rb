@@ -17,16 +17,16 @@ module SC::Billing::Stripe::Webhooks::Customers
     end
 
     def actualize_default_payment_source(user, source_id)
-      return user.update(default_payment_source: nil) if source_id.nil?
+      return user.update(default_stripe_payment_source: nil) if source_id.nil?
 
       attach_default_payment_source(user, source_id)
     end
 
     def attach_default_payment_source(user, source_id)
-      payment_source = ::SC::Billing::PaymentSource.find(stripe_id: source_id)
+      payment_source = ::SC::Billing::Stripe::PaymentSource.find(stripe_id: source_id)
       return if payment_source.nil?
 
-      user.update(default_payment_source: payment_source)
+      user.update(default_stripe_payment_source: payment_source)
     end
   end
 end

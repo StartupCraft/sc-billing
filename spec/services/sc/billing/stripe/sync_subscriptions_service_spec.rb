@@ -43,7 +43,7 @@ RSpec.describe SC::Billing::Stripe::SyncSubscriptionsService, :stripe do
       allow(Stripe::Subscription).to receive(:all).and_return(subscriptions_list)
     end
 
-    let!(:subscription) { create(:subscription, :active, stripe_id: 'sub_1') }
+    let!(:subscription) { create(:stripe_subscription, :active, stripe_id: 'sub_1') }
 
     context 'when plan does not exist in system' do
       it 'raises error' do
@@ -53,7 +53,7 @@ RSpec.describe SC::Billing::Stripe::SyncSubscriptionsService, :stripe do
 
     context 'when product does not exist in system' do
       before do
-        create(:plan, stripe_id: 'plan_1')
+        create(:stripe_plan, stripe_id: 'plan_1')
       end
 
       it 'raises error' do
@@ -62,10 +62,10 @@ RSpec.describe SC::Billing::Stripe::SyncSubscriptionsService, :stripe do
     end
 
     context 'when product exists in system' do
-      let!(:product) { create(:product, stripe_id: 'prod_1') }
+      let!(:product) { create(:stripe_product, stripe_id: 'prod_1') }
 
       before do
-        create(:plan, product: product, stripe_id: 'plan_1')
+        create(:stripe_plan, product: product, stripe_id: 'plan_1')
         create(:user, stripe_customer_id: 'cus_1')
       end
 
@@ -77,7 +77,7 @@ RSpec.describe SC::Billing::Stripe::SyncSubscriptionsService, :stripe do
             .and(not_change { subscription.reload.trial_start_at })
             .and(not_change { subscription.reload.trial_end_at })
             .and(change { subscription.reload.stripe_data })
-            .and(change { ::SC::Billing::Subscription.count }.by(1))
+            .and(change { ::SC::Billing::Stripe::Subscription.count }.by(1))
         )
       end
     end
