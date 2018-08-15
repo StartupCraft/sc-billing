@@ -8,10 +8,24 @@ RSpec.describe SC::Billing::Stripe::Customers::CreateOperation, :stripe do
   let(:user) { create(:user) }
   let(:token) { stripe_helper.generate_card_token }
 
-  it 'creates payment source', :aggregate_failures do
-    expect { call }.to(change { user.reload.stripe_customer_id })
+  context 'when create with token' do
+    it 'creates payment source', :aggregate_failures do
+      expect { call }.to(change { user.reload.stripe_customer_id })
 
-    is_expected.to be_success
+      is_expected.to be_success
+    end
+  end
+
+  context 'when create without token' do
+    subject(:call) do
+      described_class.new.call(user)
+    end
+
+    it 'creates payment source', :aggregate_failures do
+      expect { call }.to(change { user.reload.stripe_customer_id })
+
+      is_expected.to be_success
+    end
   end
 
   context 'when stripe raise error' do

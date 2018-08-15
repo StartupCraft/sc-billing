@@ -6,7 +6,7 @@ module SC::Billing::Stripe::Customers
   class CreateOperation < ::SC::Billing::BaseOperation
     include Dry::Monads::Try::Mixin
 
-    def call(user, token:)
+    def call(user, token: nil)
       Try(Stripe::InvalidRequestError) do
         stripe_data = create_in_stripe(user, token)
         actualize_user(user, stripe_data)
