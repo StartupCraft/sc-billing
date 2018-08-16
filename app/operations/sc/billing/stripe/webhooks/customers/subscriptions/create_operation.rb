@@ -17,6 +17,8 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     end
 
     def create_subscription(user, subscription_data)
+      return if subscription_exists?(subscription_data.id)
+
       plans = find_plans(subscription_data)
       try_to_find_products(subscription_data)
 
@@ -26,6 +28,10 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
         plan_pks: plans.pluck(:id),
         stripe_id: subscription_data.id
       )
+    end
+
+    def subscription_exists?(stripe_id)
+      !::SC::Billing::Stripe::Subscription.where(stripe_id: stripe_id).empty?
     end
 
     def find_entities_by_stripe_ids(type:, stripe_ids:)

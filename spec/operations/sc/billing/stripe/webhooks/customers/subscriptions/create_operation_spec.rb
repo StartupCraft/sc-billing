@@ -53,6 +53,16 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOp
         expect(created_subscription.stripe_data).not_to be_nil
       end
     end
+
+    context 'when subscription already exists' do
+      before do
+        create(:stripe_subscription, stripe_id: 'sub_CcFmXH410WdGp1')
+      end
+
+      it 'does not raise error' do
+        expect { result }.not_to raise_error
+      end
+    end
   end
 
   context 'when customer not exists' do
