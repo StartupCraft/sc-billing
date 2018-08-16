@@ -15,11 +15,11 @@ module SC
   module Billing
     extend Dry::Configurable
 
-    setting :stripe_api_key, reader: true
-    setting :stripe_webhook_secret, reader: true
-    setting :user_model_name, reader: true
-    setting :custom_event_handlers, {}, reader: true
-    setting :available_events, [], reader: true
+    setting(:stripe_api_key, reader: true) { |value| Stripe.api_key = value }
+    setting(:stripe_webhook_secret, reader: true)
+    setting(:user_model_name, reader: true)
+    setting(:custom_event_handlers, {}, reader: true)
+    setting(:available_events, [], reader: true)
 
     class << self
       def user_model
