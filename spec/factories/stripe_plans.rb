@@ -7,7 +7,9 @@ FactoryBot.define do
     name { FFaker::Lorem.word }
     stripe_id { SecureRandom.hex }
     amount { rand(10_000) }
-    currency 'usd'
+    currency { 'usd' }
+    interval { 'month' }
+    interval_count { 1 }
 
     association :product, factory: :stripe_product
   end

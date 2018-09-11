@@ -8,8 +8,10 @@ require 'dry-container'
 require 'dry-transaction'
 require 'dry-monads'
 require 'stripe'
+require 'transproc'
 
 require 'sc/billing/import'
+require 'sc/billing/transform'
 
 module SC
   module Billing

@@ -3,32 +3,31 @@
 module SC::Billing::Stripe
   class SyncPlansService
     def call
-      ::Stripe::Plan.all.data.each(&method(:create_if_not_exists))
+      ::Stripe::Plan.all.data.each(&method(:create_or_actualize))
     end
 
     private
 
-    def create_if_not_exists(stripe_plan)
-      return if plan_exists?(stripe_plan.id)
+    def create_or_actualize(stripe_plan)
+      plan = find_plan(stripe_plan.id)
 
-      product = find_product(stripe_plan.product)
-      raise "There is no product with id: #{stripe_plan.product} in system" unless product
-
-      ::SC::Billing::Stripe::Plan.create(
-        stripe_id: stripe_plan.id,
-        name: stripe_plan.nickname,
-        product: product,
-        amount: stripe_plan.amount,
-        currency: stripe_plan.currency
-      )
+      if plan.nil?
+        create_plan(stripe_plan)
+      else
+        actualize_plan(plan, stripe_plan)
+      end
     end
 
-    def plan_exists?(stripe_id)
-      !::SC::Billing::Stripe::Plan.where(stripe_id: stripe_id).empty?
+    def create_plan(stripe_plan)
+      SC::Billing::Stripe::Plans::CreateOperation.new.call(stripe_plan)
     end
 
-    def find_product(product_id)
-      ::SC::Billing::Stripe::Product.find(stripe_id: product_id)
+    def actualize_plan(plan, stripe_plan)
+      SC::Billing::Stripe::Plans::UpdateOperation.new.call(plan, stripe_plan)
+    end
+
+    def find_plan(stripe_id)
+      ::SC::Billing::Stripe::Plan.find(stripe_id: stripe_id)
     end
   end
 end

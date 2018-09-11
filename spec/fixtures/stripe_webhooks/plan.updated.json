@@ -22,7 +22,7 @@
       "tiers": null,
       "tiers_mode": null,
       "transform_usage": null,
-      "trial_period_days": null,
+      "trial_period_days": 7,
       "usage_type": "licensed"
     },
     "previous_attributes": {

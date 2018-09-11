@@ -10,6 +10,9 @@ Sequel.migration do
       Integer :amount, null: false
       String :currency, null: false
       foreign_key :product_id, :stripe_products, null: false, index: true
+      String :interval, null: false
+      Integer :interval_count, null: false
+      Integer :trial_period_days
 
       unique :stripe_id
 

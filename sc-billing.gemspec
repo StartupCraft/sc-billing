@@ -7,6 +7,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sc/billing/version'
 
 # Describe your gem and declare its dependencies:
+# rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |s|
   s.name        = 'sc-billing'
   s.version     = SC::Billing::VERSION
@@ -28,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '>= 5.1', '< 6.0'
   s.add_dependency 'sequel', '>= 5.0'
   s.add_dependency 'stripe', '>= 3.11'
+  s.add_dependency 'transproc', '>= 1.0'
 
   s.add_development_dependency 'database_cleaner', '1.6'
   s.add_development_dependency 'factory_bot_rails', '~> 4.8'
@@ -40,3 +42,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'stripe-ruby-mock', '2.5.3'
   s.add_development_dependency 'webmock', '~> 3.0'
 end
+# rubocop:enable Metrics/BlockLength

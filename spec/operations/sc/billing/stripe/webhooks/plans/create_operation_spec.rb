@@ -33,6 +33,9 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Plans::CreateOperation, :stripe do
         expect(created_plan.product).to eq(product)
         expect(created_plan.amount).to eq(3400)
         expect(created_plan.currency).to eq('usd')
+        expect(created_plan.interval).to eq('month')
+        expect(created_plan.interval_count).to eq(1)
+        expect(created_plan.trial_period_days).to be_nil
       end
     end
   end

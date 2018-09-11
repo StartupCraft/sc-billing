@@ -12,10 +12,13 @@ RSpec.describe SC::Billing::Stripe::SyncPlansService, :stripe do
     before do
       stripe_helper.create_plan(
         id: 'management',
-        nickname: 'Management',
+        nickname: 'New Management',
         product: 'prod_1',
         amount: 100,
-        curreny: 'usd'
+        curreny: 'usd',
+        interval: 'year',
+        interval_count: 2,
+        trial_period_days: 1
       )
     end
 
@@ -36,12 +39,17 @@ RSpec.describe SC::Billing::Stripe::SyncPlansService, :stripe do
     end
 
     context 'when plans already exists' do
-      before do
-        create(:stripe_plan, stripe_id: 'management', name: 'Management')
-      end
+      let!(:stripe_plan) { create(:stripe_plan, stripe_id: 'management', name: 'Management', currency: 'cad') }
 
-      it 'not creates plans' do
-        expect { call }.not_to change(::SC::Billing::Stripe::Plan, :count)
+      it 'not creates plans', :aggregate_failures do
+        expect { call }.to(
+          not_change(::SC::Billing::Stripe::Plan, :count)
+            .and(change { stripe_plan.reload.name }.to('New Management'))
+            .and(change { stripe_plan.reload.currency }.to('usd'))
+            .and(change { stripe_plan.reload.interval }.to('year'))
+            .and(change { stripe_plan.reload.interval_count }.to(2))
+            .and(change { stripe_plan.reload.trial_period_days }.to(1))
+        )
       end
     end
   end

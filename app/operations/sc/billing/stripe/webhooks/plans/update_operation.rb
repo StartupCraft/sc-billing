@@ -7,11 +7,7 @@ module SC::Billing::Stripe::Webhooks::Plans
       plan = ::SC::Billing::Stripe::Plan.find(stripe_id: plan_data.id)
       return unless plan
 
-      plan.update(
-        name: plan_data.nickname,
-        amount: plan_data.amount,
-        currency: plan_data.currency
-      )
+      SC::Billing::Stripe::Plans::UpdateOperation.new.call(plan, plan_data)
     end
   end
 end
