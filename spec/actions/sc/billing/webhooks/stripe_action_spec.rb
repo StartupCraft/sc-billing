@@ -189,7 +189,9 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
       let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation).to(
+          receive(:new).and_return(operation)
+        )
         allow(operation).to receive(:call)
       end
 
@@ -204,7 +206,9 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
       let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation).to(
+          receive(:new).and_return(operation)
+        )
         allow(operation).to receive(:call)
       end
 
@@ -219,7 +223,9 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
       let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation).to(
+          receive(:new).and_return(operation)
+        )
         allow(operation).to receive(:call)
       end
 
@@ -234,7 +240,9 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
       let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation).to(
+          receive(:new).and_return(operation)
+        )
         allow(operation).to receive(:call)
       end
 
@@ -249,7 +257,9 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
       let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation).to(
+          receive(:new).and_return(operation)
+        )
         allow(operation).to receive(:call)
       end
 
@@ -264,7 +274,9 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
       let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation) }
 
       before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation).to receive(:new).and_return(operation)
+        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation).to(
+          receive(:new).and_return(operation)
+        )
         allow(operation).to receive(:call)
       end
 
