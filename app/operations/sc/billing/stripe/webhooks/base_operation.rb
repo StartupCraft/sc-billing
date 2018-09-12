@@ -7,5 +7,22 @@ module SC::Billing::Stripe::Webhooks
         type_name
       end
     end
+
+    private
+
+    def run_hook(hook_type, *params)
+      hook_handler = ::SC::Billing.event_hooks.dig(self.class.event_type, hook_type)
+      return if hook_handler.nil?
+
+      hook_handler.new.call(*params)
+    end
+
+    def run_before_hook(*params)
+      run_hook(:before, *params)
+    end
+
+    def run_after_hook(*params)
+      run_hook(:after, *params)
+    end
   end
 end

@@ -5,7 +5,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('dummy/config/environment.rb', __dir__)
 require 'rspec/rails'
 require 'factory_bot_rails'
-require 'pry'
+require 'pry-byebug'
 require 'stripe_mock'
 require 'ffaker'
 require 'database_cleaner'
