@@ -2,6 +2,8 @@
 
 module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
   class DeleteOperation < ::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation
+    set_event_type 'customer.subscription.deleted'
+
     private
 
     def update_subscription(subscription, subscription_data)

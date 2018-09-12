@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module SC::Billing::Stripe::Webhooks::Customers
-  class UpdateOperation < ::SC::Billing::BaseOperation
+  class UpdateOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
+    set_event_type 'customer.updated'
+
     def call(event)
       customer_data = event.respond_to?(:data) ? event.data.object : event
       user = find_user(customer_data.id)

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module SC::Billing::Stripe::Webhooks::Customers::Sources
-  class UpdateOperation < ::SC::Billing::BaseOperation
+  class UpdateOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
+    set_event_type 'customer.source.updated'
+
     def call(event)
       source_data = event.data.object
       payment_source = find_payment_source(source_data.id)

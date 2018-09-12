@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module SC::Billing::Stripe::Webhooks::Customers::Sources
-  class CreateOperation < SC::Billing::BaseOperation
+  class CreateOperation < SC::Billing::Stripe::Webhooks::BaseOperation
+    set_event_type 'customer.source.created'
+
     def call(event)
       source_data = event.data.object
       return if payment_source_exists?(source_data.id)

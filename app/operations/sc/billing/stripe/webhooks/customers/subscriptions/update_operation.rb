@@ -4,6 +4,8 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
   class UpdateOperation < ::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation
     include ::SC::Billing::Import['helpers.from_timestamp_to_time']
 
+    set_event_type 'customer.subscription.updated'
+
     def call(event)
       subscription_data = event.respond_to?(:data) ? event.data.object : event
       subscription = find_subscription(subscription_data.id)
