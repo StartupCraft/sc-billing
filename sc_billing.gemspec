@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop', '~> 0.58'
   s.add_development_dependency 'rubocop-rspec', '~> 1.27'
   s.add_development_dependency 'sequel-rails', '~> 1.0'
-  s.add_development_dependency 'stripe-ruby-mock', '2.5.3'
+  s.add_development_dependency 'stripe-ruby-mock', '~> 2.5.4'
   s.add_development_dependency 'webmock', '~> 3.0'
 end
 # rubocop:enable Metrics/BlockLength

@@ -6,7 +6,8 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CancelOperation, :stripe do
   end
 
   let(:stripe_customer) { Stripe::Customer.create(source: stripe_helper.generate_card_token) }
-  let(:stripe_subscription) { Stripe::Subscription.create(customer: stripe_customer.id) }
+  let(:stripe_subscription) { Stripe::Subscription.create(customer: stripe_customer.id, items: [plan: plan.id]) }
+  let(:plan) { stripe_helper.create_plan }
   let(:user) { create(:user, stripe_customer_id: stripe_customer.id) }
   let(:subscription) { create(:stripe_subscription, user: user, stripe_id: stripe_subscription.id) }
 
