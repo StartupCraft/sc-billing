@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe SC::Billing::Stripe::Subscriptions::CreateOperation, :stripe do
+RSpec.describe SC::Billing::Stripe::Subscriptions::EstimateOperation, :stripe do
   subject(:call) do
     described_class.new.call(user, subscription_params)
   end
@@ -11,10 +11,13 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CreateOperation, :stripe do
   let(:user) { create(:user, stripe_customer_id: stripe_customer.id) }
   let(:plan) { stripe_helper.create_plan }
 
-  it 'creates subscription', :aggregate_failures do
-    expect { call }.to change(::SC::Billing::Stripe::Subscription, :count).by(1)
+  before do
+    allow(::Stripe::Invoice).to receive(:upcoming)
+  end
 
+  it 'estimates subscription', :aggregate_failures do
     expect(call).to be_success
+    expect(::Stripe::Invoice).to have_received(:upcoming)
   end
 
   context 'when with coupon' do
@@ -23,30 +26,26 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CreateOperation, :stripe do
     context 'with valid coupon' do
       let(:coupon) { Stripe::Coupon.create(duration: 'forever').id }
 
-      it 'creates subscription with coupon', :aggregate_failures do
-        expect { call }.to change(::SC::Billing::Stripe::Subscription, :count).by(1)
-
+      it 'estimates subscription', :aggregate_failures do
         expect(call).to be_success
+        expect(::Stripe::Invoice).to have_received(:upcoming)
       end
     end
 
     context 'with invalid coupon' do
       let(:coupon) { SecureRandom.hex }
 
-      it 'does not create subscription with coupon', :aggregate_failures do
+      before do
+        allow(::Stripe::Invoice).to(
+          receive(:upcoming)
+            .with(any_args)
+            .and_raise(Stripe::InvalidRequestError.new('coupon is invalid', {}))
+        )
+      end
+
+      it 'does not estimate subscription', :aggregate_failures do
         expect(call).to be_failure
       end
-    end
-  end
-
-  context 'when stripe raise error' do
-    before do
-      error = Stripe::InvalidRequestError.new('Some error', nil)
-      StripeMock.prepare_error(error, :create_subscription)
-    end
-
-    it 'returns failure' do
-      expect(call).to be_failure
     end
   end
 end
