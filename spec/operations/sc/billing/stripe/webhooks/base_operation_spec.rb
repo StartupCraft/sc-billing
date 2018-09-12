@@ -43,7 +43,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
 
           config.available_events = ['event.type']
           config.event_hooks = {
-            'event.type' => {before: before_hook_operation_class}
+            'event.type' => {'before' => before_hook_operation_class}
           }
 
           example.run
@@ -64,7 +64,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
       it 'does not call before hook' do
         operation.call
 
-        expect(before_hook_operation).to_not have_received(:call)
+        expect(before_hook_operation).not_to have_received(:call)
       end
     end
   end
@@ -92,7 +92,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
 
           config.available_events = ['event.type']
           config.event_hooks = {
-            'event.type' => {after: after_hook_operation_class}
+            'event.type' => {'after' => after_hook_operation_class}
           }
 
           example.run
@@ -113,7 +113,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
       it 'does not call after hook' do
         operation.call
 
-        expect(after_hook_operation).to_not have_received(:call)
+        expect(after_hook_operation).not_to have_received(:call)
       end
     end
   end
