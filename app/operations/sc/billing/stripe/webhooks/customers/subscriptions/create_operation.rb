@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
-  class CreateOperation < ::SC::Billing::BaseOperation
+  class CreateOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
+    set_event_type 'customer.subscription.created'
+
     def call(event)
       subscription_data = event.respond_to?(:data) ? event.data.object : event
       user = find_user(subscription_data.customer)

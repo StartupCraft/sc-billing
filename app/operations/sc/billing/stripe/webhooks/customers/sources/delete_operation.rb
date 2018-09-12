@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module SC::Billing::Stripe::Webhooks::Customers::Sources
-  class DeleteOperation < ::SC::Billing::BaseOperation
+  class DeleteOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
+    set_event_type 'customer.source.deleted'
+
     def call(event)
       source_data = event.data.object
       payment_source = find_payment_source(source_data.id)

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module SC::Billing::Stripe::Webhooks::Customers
-  class CreateOperation < ::SC::Billing::BaseOperation
+  class CreateOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
+    set_event_type 'customer.created'
+
     def call(event)
       customer_data = event.data.object
       user = find_user(customer_data)
