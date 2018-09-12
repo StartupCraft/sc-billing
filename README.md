@@ -27,6 +27,7 @@ $ gem install sc-billing
 * add rake tasks(sync subscriptions)
 * add cancel subscription action
 * add payment source actions(pure classes to call ?)
+* add hooks on all operations and add tests
 
 ## Contributing
 Contribution directions go here.

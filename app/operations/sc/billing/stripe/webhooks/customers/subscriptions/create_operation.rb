@@ -5,11 +5,15 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     set_event_type 'customer.subscription.created'
 
     def call(event)
+      run_before_hook(event)
+
       subscription_data = event.respond_to?(:data) ? event.data.object : event
       user = find_user(subscription_data.customer)
       return unless user
 
-      create_subscription(user, subscription_data)
+      create_subscription(user, subscription_data).tap do |subscription|
+        run_after_hook(subscription)
+      end
     end
 
     private

@@ -2,7 +2,7 @@
 
 module SC::Billing::Stripe::Webhooks
   class BaseOperation < ::SC::Billing::BaseOperation
-    def self.set_event_type(type_name)
+    def self.set_event_type(type_name) # rubocop:disable Naming/AccessorMethodName
       define_singleton_method(:event_type) do
         type_name
       end
@@ -18,11 +18,11 @@ module SC::Billing::Stripe::Webhooks
     end
 
     def run_before_hook(*params)
-      run_hook(:before, *params)
+      run_hook('before', *params)
     end
 
     def run_after_hook(*params)
-      run_hook(:after, *params)
+      run_hook('after', *params)
     end
   end
 end
