@@ -15,6 +15,7 @@ services:
       - bin-data:/usr/local/bin/:cached
     environment:
       - RAILS_ENV=${RAILS_ENV:-test}
+      - DATABASE_URL=postgresql://postgres@db/sc_test
     depends_on:
       - db
 
