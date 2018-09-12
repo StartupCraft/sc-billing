@@ -12,7 +12,7 @@ RSpec.describe SC::Billing::Stripe::Customers::CreateOperation, :stripe do
     it 'creates payment source', :aggregate_failures do
       expect { call }.to(change { user.reload.stripe_customer_id })
 
-      is_expected.to be_success
+      expect(call).to be_success
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe SC::Billing::Stripe::Customers::CreateOperation, :stripe do
     it 'creates payment source', :aggregate_failures do
       expect { call }.to(change { user.reload.stripe_customer_id })
 
-      is_expected.to be_success
+      expect(call).to be_success
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe SC::Billing::Stripe::Customers::CreateOperation, :stripe do
     end
 
     it 'returns failure' do
-      is_expected.to be_failure
+      expect(call).to be_failure
     end
   end
 end
