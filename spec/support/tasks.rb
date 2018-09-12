@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rake"
+require 'rake'
 
 # Task names should be used in the top-level describe, with an optional
 # "rake "-prefix for better documentation. Both of these will work:

@@ -12,7 +12,7 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CreateOperation, :stripe do
   it 'creates payment source', :aggregate_failures do
     expect { call }.to change(::SC::Billing::Stripe::Subscription, :count).by(1)
 
-    is_expected.to be_success
+    expect(call).to be_success
   end
 
   context 'when stripe raise error' do
@@ -22,7 +22,7 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CreateOperation, :stripe do
     end
 
     it 'returns failure' do
-      is_expected.to be_failure
+      expect(call).to be_failure
     end
   end
 end

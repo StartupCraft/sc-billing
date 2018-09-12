@@ -13,7 +13,7 @@ RSpec.describe SC::Billing::Stripe::PaymentSources::MakeDefaultOperation, :strip
   it 'makes default payment source', :aggregate_failures do
     expect { call }.to change { user.reload.default_payment_source }.to(payment_source)
 
-    is_expected.to be_success
+    expect(call).to be_success
   end
 
   context 'when stripe raise error' do
@@ -23,7 +23,7 @@ RSpec.describe SC::Billing::Stripe::PaymentSources::MakeDefaultOperation, :strip
     end
 
     it 'returns failure' do
-      is_expected.to be_failure
+      expect(call).to be_failure
     end
   end
 end
