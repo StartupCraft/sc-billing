@@ -5,6 +5,19 @@ module SC::Billing::Stripe
     plugin :association_pks
     plugin :many_through_many
 
+    TRIAL_STATUS = 'trialing'
+    ACTIVE_STATUS = 'active'
+    PAST_DUE_STATUS = 'past_due'
+    CANCELED_STATUS = 'canceled'
+    UNPAID_STATUS = 'unpaid'
+    STATUSES = [
+      TRIAL_STATUS,
+      ACTIVE_STATUS,
+      PAST_DUE_STATUS,
+      CANCELED_STATUS,
+      UNPAID_STATUS
+    ].freeze
+
     many_to_one :user, class_name: SC::Billing.user_model
     many_to_many :plans,
                  class_name: 'SC::Billing::Stripe::Plan',
@@ -17,5 +30,11 @@ module SC::Billing::Stripe
                         %i[stripe_plans id product_id]
                       ],
                       class_name: 'SC::Billing::Stripe::Product'
+
+    STATUSES.each do |status|
+      define_method("#{status}?") do
+        self.status == status
+      end
+    end
   end
 end
