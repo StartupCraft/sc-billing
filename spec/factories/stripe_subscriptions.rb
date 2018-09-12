@@ -18,5 +18,9 @@ FactoryBot.define do
     trait :canceled do
       status { 'canceled' }
     end
+
+    trait :trial do
+      status { 'trialing' }
+    end
   end
 end
