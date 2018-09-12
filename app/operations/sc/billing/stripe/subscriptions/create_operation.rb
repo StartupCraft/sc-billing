@@ -6,17 +6,17 @@ module SC::Billing::Stripe::Subscriptions
   class CreateOperation < ::SC::Billing::BaseOperation
     include Dry::Monads::Try::Mixin
 
-    def call(user, items:)
+    def call(user, items:, coupon: nil)
       Try(Stripe::InvalidRequestError) do
-        subscription_data = create_in_stripe(user, items)
+        subscription_data = create_in_stripe(user, items, coupon)
         create_in_db(user, subscription_data)
       end
     end
 
     private
 
-    def create_in_stripe(user, items)
-      ::Stripe::Subscription.create(customer: user.stripe_customer_id, items: items)
+    def create_in_stripe(user, items, coupon)
+      ::Stripe::Subscription.create(customer: user.stripe_customer_id, items: items, coupon: coupon)
     end
 
     def create_in_db(user, subscription_data)
