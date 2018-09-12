@@ -19,8 +19,16 @@ FactoryBot.define do
       status { 'canceled' }
     end
 
-    trait :trial do
+    trait :trialing do
       status { 'trialing' }
+    end
+
+    trait :past_due do
+      status { 'past_due' }
+    end
+
+    trait :unpaid do
+      status { 'unpaid' }
     end
   end
 end
