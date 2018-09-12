@@ -22,6 +22,7 @@ module SC
     setting(:user_model_name, reader: true)
     setting(:custom_event_handlers, {}, reader: true)
     setting(:available_events, [], reader: true)
+    setting(:event_hooks, {}, reader: true)
 
     class << self
       def user_model
