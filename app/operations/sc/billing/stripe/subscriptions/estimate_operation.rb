@@ -7,7 +7,7 @@ module SC::Billing::Stripe::Subscriptions
     include Dry::Monads::Try::Mixin
 
     def call(user, items:, coupon: nil)
-      Try(Stripe::InvalidRequestError) do
+      Try(Stripe::InvalidRequestError, Stripe::CardError) do
         estimate(user, items, coupon)
       end
     end

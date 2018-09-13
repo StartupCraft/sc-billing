@@ -7,7 +7,7 @@ module SC::Billing::Stripe::Subscriptions
     include Dry::Monads::Try::Mixin
 
     def call(user, items:, coupon: nil)
-      Try(Stripe::InvalidRequestError) do
+      Try(Stripe::InvalidRequestError, Stripe::CardError) do
         subscription_data = create_in_stripe(user, items, coupon)
         create_in_db(user, subscription_data)
       end
