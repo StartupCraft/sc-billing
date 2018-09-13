@@ -43,9 +43,23 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::EstimateOperation, :stripe do
         )
       end
 
-      it 'does not estimate subscription', :aggregate_failures do
+      it 'does not estimate subscription' do
         expect(call).to be_failure
       end
+    end
+  end
+
+  context 'when Stripe::CardError was raised' do
+    before do
+      allow(::Stripe::Invoice).to(
+        receive(:upcoming)
+          .with(any_args)
+          .and_raise(Stripe::CardError.new('Your card was declined.', nil, 402))
+      )
+    end
+
+    it 'returns failure' do
+      expect(call).to be_failure
     end
   end
 end

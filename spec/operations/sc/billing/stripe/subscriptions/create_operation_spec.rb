@@ -39,9 +39,20 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CreateOperation, :stripe do
     end
   end
 
-  context 'when stripe raise error' do
+  context 'when Stripe::InvalidRequestError was raised' do
     before do
       error = Stripe::InvalidRequestError.new('Some error', nil)
+      StripeMock.prepare_error(error, :create_subscription)
+    end
+
+    it 'returns failure' do
+      expect(call).to be_failure
+    end
+  end
+
+  context 'when Stripe::CardError was raised' do
+    before do
+      error = Stripe::CardError.new('Some error', nil, 402)
       StripeMock.prepare_error(error, :create_subscription)
     end
 
