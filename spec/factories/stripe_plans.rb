@@ -10,6 +10,7 @@ FactoryBot.define do
     currency { 'usd' }
     interval { 'month' }
     interval_count { 1 }
+    applicable { FFaker::Boolean.random }
 
     association :product, factory: :stripe_product
   end

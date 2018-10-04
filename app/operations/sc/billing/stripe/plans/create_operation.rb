@@ -31,6 +31,7 @@ module SC::Billing::Stripe::Plans
     def create_plan(product, plan_data)
       Transformer.new.call(plan_data).yield_self do |plan_params|
         plan_params[:product] = product
+        plan_params[:applicable] = false
 
         ::SC::Billing::Stripe::Plan.create(plan_params)
       end
