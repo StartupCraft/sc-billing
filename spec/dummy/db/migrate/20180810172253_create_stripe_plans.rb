@@ -13,6 +13,7 @@ Sequel.migration do
       String :interval, null: false
       Integer :interval_count, null: false
       Integer :trial_period_days
+      FalseClass :applicable, null: false
 
       unique :stripe_id
 

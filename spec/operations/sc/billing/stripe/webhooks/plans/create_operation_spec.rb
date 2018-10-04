@@ -36,6 +36,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Plans::CreateOperation, :stripe do
         expect(created_plan.interval).to eq('month')
         expect(created_plan.interval_count).to eq(1)
         expect(created_plan.trial_period_days).to be_nil
+        expect(created_plan).not_to be_applicable
       end
     end
   end
