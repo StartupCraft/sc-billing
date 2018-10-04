@@ -28,6 +28,7 @@ $ gem install sc-billing
 * add cancel subscription action
 * add payment source actions(pure classes to call ?)
 * add hooks on all operations and add tests
+* update stripe-ruby-mock version
 
 ## Contributing
 Contribution directions go here.
