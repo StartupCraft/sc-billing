@@ -12,4 +12,13 @@ RSpec.describe SC::Billing::Stripe::Plan, type: :model do
 
     it { expect(plan).to be_paid }
   end
+
+  describe '.applicable' do
+    it 'return only applicable plans' do
+      applicable_plan = create(:stripe_plan, :applicable)
+      create(:stripe_plan, :not_applicable)
+
+      expect(described_class.applicable.all).to eq([applicable_plan])
+    end
+  end
 end
