@@ -13,5 +13,13 @@ FactoryBot.define do
     applicable { FFaker::Boolean.random }
 
     association :product, factory: :stripe_product
+
+    trait :applicable do
+      applicable { true }
+    end
+
+    trait :not_applicable do
+      applicable { false }
+    end
   end
 end
