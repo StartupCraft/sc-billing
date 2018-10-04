@@ -16,7 +16,12 @@ module SC::Billing::Stripe::Subscriptions
     private
 
     def create_in_stripe(user, items, coupon)
-      ::Stripe::Subscription.create(customer: user.stripe_customer_id, items: items, coupon: coupon)
+      ::Stripe::Subscription.create(
+        customer: user.stripe_customer_id,
+        items: items,
+        coupon: coupon,
+        trial_from_plan: true
+      )
     end
 
     def create_in_db(user, subscription_data)
