@@ -22,6 +22,8 @@ Sequel.migration do
       DateTime :trial_start_at
       DateTime :trial_end_at
       Jsonb :stripe_data, null: false
+      FalseClass :cancel_at_period_end, null: false
+      DateTime :canceled_at
 
       DateTime :created_at, null: false, default: Sequel::CURRENT_TIMESTAMP
       DateTime :updated_at, null: false, default: Sequel::CURRENT_TIMESTAMP

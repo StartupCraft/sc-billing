@@ -10,6 +10,7 @@ FactoryBot.define do
     current_period_start_at { FFaker::Time.datetime.to_datetime }
     current_period_end_at { current_period_start_at + 1.month }
     stripe_data { {}.to_json }
+    cancel_at_period_end { false }
 
     trait :active do
       status { 'active' }

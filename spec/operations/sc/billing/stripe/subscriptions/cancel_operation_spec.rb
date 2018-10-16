@@ -11,7 +11,19 @@ RSpec.describe SC::Billing::Stripe::Subscriptions::CancelOperation, :stripe do
   let(:user) { create(:user, stripe_customer_id: stripe_customer.id) }
   let(:subscription) { create(:stripe_subscription, user: user, stripe_id: stripe_subscription.id) }
 
+  before do
+    canceled_subscription = stripe_subscription
+    canceled_subscription.cancel_at_period_end = true
+    canceled_subscription.canceled_at = Time.current.to_i
+
+    allow(Stripe::Subscription).to receive(:retrieve).and_return(stripe_subscription)
+    allow(stripe_subscription).to receive(:save).and_return(canceled_subscription)
+  end
+
   it 'cancels subscription' do
-    expect { call }.to(change { subscription.reload.status }.to('canceled'))
+    expect { call }.to(
+      change { subscription.reload.cancel_at_period_end }.to(true)
+        .and(change { subscription.reload.canceled_at }.from(nil))
+    )
   end
 end

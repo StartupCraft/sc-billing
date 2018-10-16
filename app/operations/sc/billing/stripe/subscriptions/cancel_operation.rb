@@ -16,7 +16,9 @@ module SC::Billing::Stripe::Subscriptions
     private
 
     def cancel_in_stripe(subscription)
-      ::Stripe::Subscription.retrieve(subscription.stripe_id).delete
+      stripe_subscription = ::Stripe::Subscription.retrieve(subscription.stripe_id)
+      stripe_subscription.cancel_at_period_end = true
+      stripe_subscription.save
     end
 
     def actualize_subscription(subscription, subscription_data)

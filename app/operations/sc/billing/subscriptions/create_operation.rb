@@ -14,6 +14,7 @@ module SC::Billing::Subscriptions
       params_by_subscription_data(data).merge!(extra_params)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def params_by_subscription_data(data)
       {
         status: data.status,
@@ -21,8 +22,11 @@ module SC::Billing::Subscriptions
         current_period_end_at: from_timestamp_to_time.call(data.current_period_end),
         trial_start_at: from_timestamp_to_time.call(data.trial_start),
         trial_end_at: from_timestamp_to_time.call(data.trial_end),
-        stripe_data: data.as_json
+        stripe_data: data.as_json,
+        cancel_at_period_end: data.cancel_at_period_end,
+        canceled_at: from_timestamp_to_time.call(data.canceled_at)
       }
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

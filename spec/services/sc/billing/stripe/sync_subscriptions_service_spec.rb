@@ -20,6 +20,7 @@ RSpec.describe SC::Billing::Stripe::SyncSubscriptionsService, :stripe do
       Stripe::ListObject.construct_from(data: [subscription_item])
     end
 
+    # rubocop:disable Metrics/MethodLength
     def construct_subscription(subscription_id, customer_id, subscription_items)
       Stripe::Subscription.construct_from(
         id: subscription_id,
@@ -29,9 +30,12 @@ RSpec.describe SC::Billing::Stripe::SyncSubscriptionsService, :stripe do
         current_period_start: 1_528_385_032,
         current_period_end: 1_530_977_032,
         trial_start: nil,
-        trial_end: nil
+        trial_end: nil,
+        cancel_at_period_end: false,
+        canceled_at: nil
       )
     end
+    # rubocop:enable Metrics/MethodLength
 
     before do
       plan = stripe_helper.create_plan(product: 'prod_1', id: 'plan_1')
