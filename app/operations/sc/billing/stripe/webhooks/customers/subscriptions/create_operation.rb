@@ -9,7 +9,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
 
       subscription_data = event.respond_to?(:data) ? event.data.object : event
       user = find_user(subscription_data.customer)
-      return unless user
+      raise "There is no user with customer_id: #{subscription_data.customer} in system" unless user
 
       create_subscription(user, subscription_data).tap do |subscription|
         run_after_hook(subscription)
