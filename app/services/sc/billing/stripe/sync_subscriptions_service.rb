@@ -3,7 +3,7 @@
 module SC::Billing::Stripe
   class SyncSubscriptionsService
     def call
-      ::Stripe::Subscription.all.data.each(&method(:create_or_actualize_subscription))
+      ::Stripe::Subscription.all.auto_paging_each.each(&method(:create_or_actualize_subscription))
     end
 
     private

@@ -42,7 +42,7 @@ RSpec.describe SC::Billing::Stripe::SyncSubscriptionsService, :stripe do
 
       subscription = double_subscription('sub_1', plan)
       subscription2 = double_subscription('sub_2', plan, 'cus_1')
-      subscriptions_list = Stripe::ListObject.construct_from(data: [subscription, subscription2])
+      subscriptions_list = Stripe::ListObject.construct_from(data: [subscription, subscription2], has_more: false)
 
       allow(Stripe::Subscription).to receive(:all).and_return(subscriptions_list)
     end
