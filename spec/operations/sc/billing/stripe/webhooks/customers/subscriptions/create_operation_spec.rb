@@ -67,7 +67,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOp
 
   context 'when customer not exists' do
     it 'does not do anything' do
-      expect(result).to be_nil
+      expect { result }.to raise_error('There is no user with customer_id: cus_CcFlMeAV92yGep in system')
     end
   end
 end
