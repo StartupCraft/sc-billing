@@ -14,7 +14,13 @@ module SC::Billing::Stripe::Webhooks
       hook_handler = ::SC::Billing.event_hooks.dig(self.class.event_type, hook_type)
       return if hook_handler.nil?
 
-      hook_handler.new.call(*params)
+      if hook_handler.is_a? Array
+        hook_handler.each do |hook|
+          hook.new.call(*params)
+        end
+      else
+        hook_handler.new.call(*params)
+      end
     end
 
     def run_before_hook(*params)
