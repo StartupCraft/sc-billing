@@ -6,10 +6,11 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOp
   end
 
   let(:event) { StripeMock.mock_webhook_event('customer.subscription.created') }
+  let(:stripe_customer_id) { 'cus_CcFlMeAV92yGep' }
 
   context 'when customer exists' do
     before do
-      create(:user, stripe_customer_id: 'cus_CcFlMeAV92yGep')
+      create(:user, stripe_customer_id: stripe_customer_id)
     end
 
     context 'when not all plans exist in sysmem' do
@@ -67,7 +68,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOp
 
   context 'when customer not exists' do
     it 'does not do anything' do
-      expect { result }.to raise_error('There is no user with customer_id: cus_CcFlMeAV92yGep in system')
+      expect { result }.to raise_error("There is no user with customer_id: #{stripe_customer_id} in system")
     end
   end
 end
