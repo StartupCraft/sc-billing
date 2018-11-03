@@ -58,6 +58,21 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
 
         expect(before_hook_operation).to have_received(:call)
       end
+
+      it 'can take array of hooks' do
+        ::SC::Billing.configure do |config|
+          config.event_hooks = {
+            'event.type' => {'before' => [
+              before_hook_operation_class,
+              before_hook_operation_class
+            ]}
+          }
+        end
+
+        operation.call
+
+        expect(before_hook_operation).to have_received(:call).twice
+      end
     end
 
     context 'when hook not activated' do
@@ -106,6 +121,21 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
         operation.call
 
         expect(after_hook_operation).to have_received(:call)
+      end
+
+      it 'can take array of hooks' do
+        ::SC::Billing.configure do |config|
+          config.event_hooks = {
+            'event.type' => {'after' => [
+              after_hook_operation_class,
+              after_hook_operation_class
+            ]}
+          }
+        end
+
+        operation.call
+
+        expect(after_hook_operation).to have_received(:call).twice
       end
     end
 
