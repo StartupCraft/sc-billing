@@ -10,6 +10,14 @@ module SC::Billing::Stripe::Webhooks
 
     private
 
+    def find_user(customer_id)
+      user_model.find(stripe_customer_id: customer_id)
+    end
+
+    def raise_if_user_not_found(user, customer_id)
+      raise "There is no user with customer_id: #{customer_id} in system" unless user
+    end
+
     def run_hook(hook_type, **params)
       hook_handler = ::SC::Billing.event_hooks.dig(self.class.event_type, hook_type)
       return if hook_handler.nil?

@@ -8,8 +8,10 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
       run_before_hook(event: event)
 
       subscription_data = fetch_data(event)
-      user = find_user(subscription_data.customer)
-      raise "There is no user with customer_id: #{subscription_data.customer} in system" unless user
+      customer_id = subscription_data.customer
+      user = find_user(customer_id)
+
+      raise_if_user_not_found(user, customer_id)
 
       create_subscription(user, subscription_data).tap do |subscription|
         run_after_hook(subscription: subscription)
@@ -17,10 +19,6 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     end
 
     private
-
-    def find_user(customer_id)
-      user_model.first(stripe_customer_id: customer_id)
-    end
 
     def create_subscription(user, subscription_data)
       return if subscription_exists?(subscription_data.id)
