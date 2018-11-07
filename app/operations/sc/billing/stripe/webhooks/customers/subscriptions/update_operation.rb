@@ -14,7 +14,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
       return unless subscription
 
       update_subscription(subscription, subscription_data).tap do |updated_subscription|
-        run_after_hook(updated_subscription)
+        run_after_hook(event, updated_subscription)
       end
     end
 
