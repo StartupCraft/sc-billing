@@ -17,7 +17,7 @@ module SC::Billing::Stripe::Plans
     end
 
     def call(event)
-      plan_data = event.respond_to?(:data) ? event.data.object : event
+      plan_data = fetch_data(event)
       return if plan_exists?(plan_data)
 
       product = ::SC::Billing::Stripe::Product.find(stripe_id: plan_data.product)

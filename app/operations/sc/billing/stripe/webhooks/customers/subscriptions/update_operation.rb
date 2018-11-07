@@ -9,7 +9,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     def call(event)
       run_before_hook(event: event)
 
-      subscription_data = event.respond_to?(:data) ? event.data.object : event
+      subscription_data = fetch_data(event)
       subscription = find_subscription(subscription_data.id)
       return unless subscription
 

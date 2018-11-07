@@ -5,7 +5,7 @@ module SC::Billing::Stripe::Webhooks::Customers
     set_event_type 'customer.created'
 
     def call(event)
-      customer_data = event.data.object
+      customer_data = fetch_data(event)
       user = find_user(customer_data)
 
       user = user ? actualize_user(user, customer_data) : create_user(customer_data)

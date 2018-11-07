@@ -15,6 +15,10 @@ namespace :sc do
       task sync_subscriptions: :environment do
         ::SC::Billing::Stripe::SyncSubscriptionsService.new.call
       end
+
+      task sync_invoices: :environment do
+        ::SC::Billing::Stripe::SyncInvoicesService.new.call
+      end
     end
   end
 end
