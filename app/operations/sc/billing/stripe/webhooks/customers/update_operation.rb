@@ -14,10 +14,6 @@ module SC::Billing::Stripe::Webhooks::Customers
 
     private
 
-    def find_user(customer_id)
-      user_model.find(stripe_customer_id: customer_id)
-    end
-
     def actualize_default_payment_source(user, source_id)
       return user.update(default_payment_source: nil) if source_id.nil?
 

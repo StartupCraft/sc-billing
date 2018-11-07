@@ -9,7 +9,7 @@ module SC::Billing::Stripe::Webhooks::Invoices
       customer_id = invoice_data.customer
       user = find_user(customer_id)
 
-      raise "There is no user with customer_id: #{customer_id} in system" unless user
+      raise_if_user_not_found(user, customer_id)
 
       create_invoice(user, invoice_data).tap do |invoice|
         run_after_hook(invoice, user)
@@ -17,10 +17,6 @@ module SC::Billing::Stripe::Webhooks::Invoices
     end
 
     private
-
-    def find_user(customer_id)
-      user_model.first(stripe_customer_id: customer_id)
-    end
 
     def create_invoice(user, invoice_data)
       ::SC::Billing::Stripe::Invoices::CreateOperation.new.call(

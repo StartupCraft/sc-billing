@@ -16,10 +16,6 @@ module SC::Billing::Stripe::Webhooks::Customers::Sources
 
     private
 
-    def find_user(customer_id)
-      user_model.find(stripe_customer_id: customer_id)
-    end
-
     def payment_source_exists?(source_id)
       !::SC::Billing::Stripe::PaymentSource.where(stripe_id: source_id).empty?
     end
