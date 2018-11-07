@@ -5,7 +5,7 @@ module SC::Billing::Stripe::Webhooks::Plans
     set_event_type 'plan.updated'
 
     def call(event)
-      plan_data = event.data.object
+      plan_data = fetch_data(event)
       plan = ::SC::Billing::Stripe::Plan.find(stripe_id: plan_data.id)
       return unless plan
 

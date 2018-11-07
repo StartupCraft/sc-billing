@@ -7,7 +7,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     def call(event)
       run_before_hook(event: event)
 
-      subscription_data = event.respond_to?(:data) ? event.data.object : event
+      subscription_data = fetch_data(event)
       user = find_user(subscription_data.customer)
       raise "There is no user with customer_id: #{subscription_data.customer} in system" unless user
 

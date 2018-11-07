@@ -5,7 +5,7 @@ module SC::Billing::Stripe::Webhooks::Customers
     set_event_type 'customer.updated'
 
     def call(event)
-      customer_data = event.respond_to?(:data) ? event.data.object : event
+      customer_data = fetch_data(event)
       user = find_user(customer_data.id)
       return if user.nil?
 

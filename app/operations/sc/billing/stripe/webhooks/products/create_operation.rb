@@ -5,7 +5,7 @@ module SC::Billing::Stripe::Webhooks::Products
     set_event_type 'product.created'
 
     def call(event)
-      product_data = event.data.object
+      product_data = fetch_data(event)
       return if product_exists?(product_data)
 
       ::SC::Billing::Stripe::Product.create(

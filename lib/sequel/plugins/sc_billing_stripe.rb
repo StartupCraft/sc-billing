@@ -8,6 +8,7 @@ module Sequel::Plugins::ScBillingStripe
                   class_name: 'SC::Billing::Stripe::PaymentSource'
       one_to_many :payment_sources, class_name: 'SC::Billing::Stripe::PaymentSource'
       one_to_many :subscriptions, class_name: 'SC::Billing::Stripe::Subscription'
+      one_to_many :invoices, class_name: 'SC::Billing::Stripe::Invoice'
     end
   end
 end

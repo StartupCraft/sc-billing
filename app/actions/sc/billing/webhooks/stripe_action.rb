@@ -9,6 +9,7 @@ module SC::Billing::Webhooks
     OPERATIONS_BY_EVENT_TYPE = [
       NAMESPACE::Customers::CreateOperation,
       NAMESPACE::Customers::UpdateOperation,
+      NAMESPACE::Invoices::CreateOperation,
       NAMESPACE::Products::CreateOperation,
       NAMESPACE::Plans::CreateOperation,
       NAMESPACE::Plans::UpdateOperation,

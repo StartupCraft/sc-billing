@@ -5,7 +5,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Sources
     set_event_type 'customer.source.updated'
 
     def call(event)
-      source_data = event.data.object
+      source_data = fetch_data(event)
       payment_source = find_payment_source(source_data.id)
       return if payment_source.nil?
 
