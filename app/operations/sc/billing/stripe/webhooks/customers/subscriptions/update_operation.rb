@@ -7,14 +7,14 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     set_event_type 'customer.subscription.updated'
 
     def call(event)
-      run_before_hook(event)
+      run_before_hook(event: event)
 
       subscription_data = event.respond_to?(:data) ? event.data.object : event
       subscription = find_subscription(subscription_data.id)
       return unless subscription
 
       update_subscription(subscription, subscription_data).tap do |updated_subscription|
-        run_after_hook(event, updated_subscription)
+        run_after_hook(event: event, subscription: updated_subscription)
       end
     end
 

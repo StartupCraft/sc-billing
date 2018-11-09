@@ -10,7 +10,7 @@ module SC::Billing::Stripe::Webhooks::Customers
 
       user = user ? actualize_user(user, customer_data) : create_user(customer_data)
 
-      run_after_hook(event, user)
+      run_after_hook(event: event, user: user)
     end
 
     private

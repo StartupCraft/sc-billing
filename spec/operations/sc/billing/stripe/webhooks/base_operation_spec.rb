@@ -23,7 +23,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
   describe '#before hook' do
     let(:before_hook_operation_class) do
       Class.new do
-        def call; end
+        def call(**params); end
       end
     end
     let(:before_hook_operation) do
@@ -87,7 +87,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::BaseOperation do
   describe '#after hook' do
     let(:after_hook_operation_class) do
       Class.new do
-        def call; end
+        def call(**params); end
       end
     end
     let(:after_hook_operation) do
