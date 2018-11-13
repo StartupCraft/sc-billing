@@ -9,23 +9,25 @@ module SC::Billing::Stripe
     private
 
     def create_or_actualize_invoice(invoice_data)
-      if invoice_exists?(invoice_data.id)
-        actualize_invoice(invoice_data)
-      else
+      invoice = find_invoice(invoice_data.id)
+
+      if invoice.nil?
         create_invoice(invoice_data)
+      else
+        actualize_invoice(invoice, invoice_data)
       end
     end
 
-    def invoice_exists?(stripe_id)
-      !::SC::Billing::Stripe::Invoice.where(stripe_id: stripe_id).empty?
+    def find_invoice(stripe_id)
+      ::SC::Billing::Stripe::Invoice.find(stripe_id: stripe_id)
     end
 
     def create_invoice(data)
       ::SC::Billing::Stripe::Invoices::CreateOperation.new.call(data)
     end
 
-    def actualize_invoice(data)
-      ::SC::Billing::Stripe::Invoices::UpdateOperation.new.call(data)
+    def actualize_invoice(invoice, data)
+      ::SC::Billing::Stripe::Invoices::UpdateOperation.new.call(invoice, data)
     end
   end
 end

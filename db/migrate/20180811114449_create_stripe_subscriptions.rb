@@ -12,7 +12,7 @@ Sequel.migration do
     create_table :stripe_subscriptions do
       primary_key :id
 
-      foreign_key :user_id, :users, null: false, index: true
+      foreign_key :user_id, SC::Billing.user_model.table_name, null: false, index: true
 
       stripe_subscriptions_statuses :status, null: false
       String :stripe_id, null: false
