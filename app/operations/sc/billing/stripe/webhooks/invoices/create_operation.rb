@@ -2,26 +2,26 @@
 
 module SC::Billing::Stripe::Webhooks::Invoices
   class CreateOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
-    set_event_type 'invoice.payment_succeeded'
+    set_event_type 'invoice.created'
 
     def call(event)
       invoice_data = fetch_data(event)
-      customer_id = invoice_data.customer
-      user = find_user(customer_id)
 
-      raise_if_user_not_found(user, customer_id)
+      user = find_or_raise_user(invoice_data.customer)
+      subscription = find_or_raise_subscription(invoice_data.subscription)
 
-      create_invoice(user, invoice_data).tap do |invoice|
-        run_after_hook(invoice, user)
+      create_invoice(user, subscription, invoice_data).tap do |invoice|
+        run_after_hook(invoice: invoice, user: user)
       end
     end
 
     private
 
-    def create_invoice(user, invoice_data)
+    def create_invoice(user, subscription, invoice_data)
       ::SC::Billing::Stripe::Invoices::CreateOperation.new.call(
         invoice_data,
-        user: user
+        user: user,
+        subscription: subscription
       )
     end
   end

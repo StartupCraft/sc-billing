@@ -11,6 +11,7 @@ SC::Billing.configure do |config|
     'customer.source.deleted',
     'customer.subscription.created',
     'customer.subscription.updated',
-    'customer.subscription.deleted'
+    'customer.subscription.deleted',
+    'invoice.created'
   ]
 end
