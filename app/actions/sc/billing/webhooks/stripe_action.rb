@@ -9,7 +9,6 @@ module SC::Billing::Webhooks
     OPERATIONS_BY_EVENT_TYPE = [
       NAMESPACE::Customers::CreateOperation,
       NAMESPACE::Customers::UpdateOperation,
-      NAMESPACE::Invoices::CreateOperation,
       NAMESPACE::Products::CreateOperation,
       NAMESPACE::Plans::CreateOperation,
       NAMESPACE::Plans::UpdateOperation,
@@ -18,7 +17,8 @@ module SC::Billing::Webhooks
       NAMESPACE::Customers::Sources::DeleteOperation,
       NAMESPACE::Customers::Subscriptions::CreateOperation,
       NAMESPACE::Customers::Subscriptions::UpdateOperation,
-      NAMESPACE::Customers::Subscriptions::DeleteOperation
+      NAMESPACE::Customers::Subscriptions::DeleteOperation,
+      NAMESPACE::Invoices::CreateOperation
     ].map do |operation_class|
       [operation_class.event_type, operation_class]
     end.to_h.freeze

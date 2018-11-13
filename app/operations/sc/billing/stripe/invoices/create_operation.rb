@@ -22,17 +22,17 @@ module SC::Billing::Stripe::Invoices
       timestamp_to_time %i[date due_date]
     end
 
-    def call(invoice_data, **_extra_params)
+    def call(invoice_data, **extra_params)
       return if invoice_exists?(invoice_data)
 
-      create_invoice(invoice_data)
+      create_invoice(invoice_data, extra_params)
     end
 
     private
 
-    def create_invoice(invoice_data)
-      user = user_model.find(stripe_customer_id: invoice_data.customer)
-      subscription = ::SC::Billing::Stripe::Subscription.find(stripe_id: invoice_data.subscription)
+    def create_invoice(invoice_data, extra_params)
+      user = extract_or_find_user(invoice_data, extra_params)
+      subscription = extract_or_find_subscription(invoice_data, extra_params)
 
       Transformer.new.call(invoice_data).yield_self do |invoice_params|
         invoice_params[:user] = user
@@ -41,6 +41,26 @@ module SC::Billing::Stripe::Invoices
         invoice_params[:stripe_data] = invoice_data.as_json
 
         ::SC::Billing::Stripe::Invoice.create(invoice_params)
+      end
+    end
+
+    def extract_or_find_user(invoice_data, extra_params)
+      extract_or_find(extra_params, :user) do
+        user_model.find(stripe_customer_id: invoice_data.customer)
+      end
+    end
+
+    def extract_or_find_subscription(invoice_data, extra_params)
+      extract_or_find(extra_params, :subscription) do
+        ::SC::Billing::Stripe::Subscription.find(stripe_id: invoice_data.subscription)
+      end
+    end
+
+    def extract_or_find(extra_params, key)
+      if extra_params.key?(key)
+        extra_params.fetch(key)
+      else
+        yield
       end
     end
 
