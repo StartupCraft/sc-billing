@@ -28,4 +28,19 @@ RSpec.describe SC::Billing::Transform do
       )
     end
   end
+
+  describe '.timestamp_to_time' do
+    subject(:transform) do
+      described_class[:timestamp_to_time, %i[as_of due_to]]
+    end
+
+    it 'transforms correctly' do
+      input = {as_of: 1_528_549_095, due_to: 1_528_559_095}
+
+      expect(transform.call(input)).to eq(
+        as_of: Time.new(2018, 6, 9, 12, 58, 15),
+        due_to: Time.new(2018, 6, 9, 15, 44, 55)
+      )
+    end
+  end
 end
