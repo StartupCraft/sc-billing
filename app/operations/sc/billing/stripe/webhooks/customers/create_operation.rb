@@ -6,7 +6,7 @@ module SC::Billing::Stripe::Webhooks::Customers
 
     def call(event)
       customer_data = fetch_data(event)
-      user = find_user(customer_data.customer)
+      user = find_user_by_email(customer_data.email)
 
       user = user ? actualize_user(user, customer_data) : create_user(customer_data)
 
@@ -24,6 +24,10 @@ module SC::Billing::Stripe::Webhooks::Customers
         stripe_customer_id: customer_data.id,
         email: customer_data.email
       )
+    end
+
+    def find_user_by_email(email)
+      user_model.find(email: email)
     end
   end
 end
