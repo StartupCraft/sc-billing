@@ -12,3 +12,5 @@ spec/dummy/tmp/
 spec/examples.txt
 
 Gemfile.lock
+
+.dir-locals.el
