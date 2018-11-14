@@ -2,6 +2,14 @@
 
 module SC::Billing::Stripe::Webhooks::Invoices
   class CreateOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
+    include SC::Billing::FindOrRaise[
+      user: :stripe_customer_id,
+      subscription: :stripe_id
+    ]
+    include SC::Billing::Import[
+      subscription_model: 'models.stripe.subscription'
+    ]
+
     set_event_type 'invoice.created'
 
     def call(event)

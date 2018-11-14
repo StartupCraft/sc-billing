@@ -12,6 +12,7 @@ require 'transproc'
 
 require 'sc/billing/import'
 require 'sc/billing/transform'
+require 'sc/billing/find_or_raise'
 
 module SC
   module Billing

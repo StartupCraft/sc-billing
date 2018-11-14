@@ -47,7 +47,7 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Invoices::CreateOperation, :stripe
       end
 
       it 'raises error' do
-        expect { call }.to raise_error("There is no user with stripe_customer_id: #{event_data.customer} in system")
+        expect { call }.to raise_error("There is no user with stripe_id: #{event_data.customer} in system")
       end
     end
   end
