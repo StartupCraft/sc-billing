@@ -7,7 +7,17 @@ RSpec.describe SC::Billing::Stripe::Invoices::CreateOperation, :stripe do
     end
 
     let!(:stripe_invoice) do
-      ::Stripe::Invoice.create(customer: 'cus_1', subscription: 'sub_1', invoice_pdf: 'somelink', amount_paid: 0)
+      plan = stripe_helper.create_plan
+      item = ::Stripe::InvoiceItem.create(plan: plan)
+      items = Stripe::ListObject.construct_from(data: [item])
+
+      ::Stripe::Invoice.create(
+        customer: 'cus_1',
+        subscription: 'sub_1',
+        invoice_pdf: 'somelink',
+        amount_paid: 0,
+        lines: items
+      )
     end
     let!(:user) { create(:user, stripe_customer_id: stripe_invoice.customer) }
     let!(:subscription) { create(:stripe_subscription, stripe_id: stripe_invoice.subscription) }
@@ -22,6 +32,7 @@ RSpec.describe SC::Billing::Stripe::Invoices::CreateOperation, :stripe do
     it 'creates invoice', :aggregate_failures do
       expect { call }.to(
         change(::SC::Billing::Stripe::Invoice, :count).by(1)
+        .and(change(::SC::Billing::Stripe::InvoiceItem, :count).by(1))
       )
       expect(::SC::Billing::Stripe::Subscription).to have_received(:find)
       expect(::SC::Billing.user_model).to have_received(:find)
@@ -33,6 +44,7 @@ RSpec.describe SC::Billing::Stripe::Invoices::CreateOperation, :stripe do
       it 'creates invoice', :aggregate_failures do
         expect { call }.to(
           change(::SC::Billing::Stripe::Invoice, :count).by(1)
+            .and(change(::SC::Billing::Stripe::InvoiceItem, :count).by(1))
         )
         expect(::SC::Billing::Stripe::Subscription).not_to have_received(:find)
         expect(::SC::Billing.user_model).not_to have_received(:find)
