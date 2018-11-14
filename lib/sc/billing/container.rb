@@ -19,6 +19,10 @@ module SC::Billing
         register 'subscription' do
           ::SC::Billing::Stripe::Subscription
         end
+
+        register 'plan' do
+          ::SC::Billing::Stripe::Plan
+        end
       end
     end
   end
