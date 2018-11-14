@@ -18,7 +18,8 @@ module SC::Billing::Webhooks
       NAMESPACE::Customers::Subscriptions::CreateOperation,
       NAMESPACE::Customers::Subscriptions::UpdateOperation,
       NAMESPACE::Customers::Subscriptions::DeleteOperation,
-      NAMESPACE::Invoices::CreateOperation
+      NAMESPACE::Invoices::CreateOperation,
+      NAMESPACE::Invoices::UpdateOperation
     ].map do |operation_class|
       [operation_class.event_type, operation_class]
     end.to_h.freeze
