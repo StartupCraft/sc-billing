@@ -319,5 +319,22 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
         expect(operation).to have_received(:call).with(event)
       end
     end
+
+    context 'when event is invoice.payment_succeeded' do
+      let(:event) { StripeMock.mock_webhook_event('invoice.payment_succeeded') }
+      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Invoices::PaymentSucceededOperation) }
+
+      before do
+        allow(::SC::Billing::Stripe::Webhooks::Invoices::PaymentSucceededOperation).to(
+          receive(:new).and_return(operation)
+        )
+        allow(operation).to receive(:call)
+      end
+
+      it 'execute proper operation', :aggregate_failures do
+        expect(result).to be_success
+        expect(operation).to have_received(:call).with(event)
+      end
+    end
   end
 end
