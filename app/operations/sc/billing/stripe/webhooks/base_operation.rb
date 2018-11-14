@@ -25,20 +25,6 @@ module SC::Billing::Stripe::Webhooks
       raise "There is no user with stripe_customer_id: #{customer_id} in system" unless user
     end
 
-    def find_or_raise_subscription(stripe_id)
-      find_subscription(stripe_id).tap do |subscription|
-        raise_if_subscription_not_found(subscription, stripe_id)
-      end
-    end
-
-    def find_subscription(stripe_id)
-      ::SC::Billing::Stripe::Subscription.find(stripe_id: stripe_id)
-    end
-
-    def raise_if_subscription_not_found(subscription, stripe_id)
-      raise "There is no subscription with stripe_id: #{stripe_id} in system" unless subscription
-    end
-
     def run_hook(hook_type, **params)
       hook_handler = ::SC::Billing.event_hooks.dig(self.class.event_type, hook_type)
       return if hook_handler.nil?

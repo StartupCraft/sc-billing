@@ -2,6 +2,11 @@
 
 module SC::Billing::Stripe::Webhooks::Invoices
   class UpdateOperation < ::SC::Billing::Stripe::Webhooks::BaseOperation
+    include SC::Billing::FindOrRaise[invoice: :stripe_id]
+    include SC::Billing::Import[
+      invoice_model: 'models.stripe.invoice'
+    ]
+
     set_event_type 'invoice.updated'
 
     def call(event)
@@ -18,20 +23,6 @@ module SC::Billing::Stripe::Webhooks::Invoices
 
     def update_invoice(invoice, invoice_data)
       SC::Billing::Stripe::Invoices::UpdateOperation.new.call(invoice, invoice_data)
-    end
-
-    def find_or_raise_invoice(stripe_id)
-      find_invoice(stripe_id).tap do |invoice|
-        raise_if_invoice_not_found(invoice, stripe_id)
-      end
-    end
-
-    def find_invoice(stripe_id)
-      ::SC::Billing::Stripe::Invoice.find(stripe_id: stripe_id)
-    end
-
-    def raise_if_invoice_not_found(invoice, stripe_id)
-      raise "There is no invoice with stripe_id: #{stripe_id} in system" unless invoice
     end
   end
 end
