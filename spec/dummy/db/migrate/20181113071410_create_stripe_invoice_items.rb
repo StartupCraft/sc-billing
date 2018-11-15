@@ -16,8 +16,6 @@ Sequel.migration do
 
       DateTime :created_at, null: false
       DateTime :updated_at, null: false
-
-      unique :stripe_id
     end
   end
 end
