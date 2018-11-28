@@ -11,8 +11,12 @@ RSpec.describe SC::Billing::Stripe::Webhooks::Customers::CreateOperation, :strip
   context 'when user does not exist' do
     it 'creates user and company', :aggregate_failures do
       expect { call }.to(
-        change(User, :count).by(1)
+        change(SC::Billing.user_model, :count).by(1)
       )
+
+      expect(
+        SC::Billing.user_model.first[SC::Billing.registration_source.field_name]
+      ).to eq(SC::Billing::Constants::USERS_CREATED_IN_STRIPE_TYPE)
     end
   end
 

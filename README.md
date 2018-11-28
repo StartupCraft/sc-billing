@@ -21,6 +21,14 @@ Or install it yourself as:
 $ gem install sc-billing
 ```
 
+## Create migration
+```bash
+make bash
+cd spec/dummy
+rails g migration name_of_your_migration
+```
+Then edit your migration there and copy it to the gem `db/migrations/` and to the project `db/migrations` folders.
+
 ## TODO
 
 * fill README
