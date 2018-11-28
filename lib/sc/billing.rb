@@ -13,6 +13,7 @@ require 'transproc'
 require 'sc/billing/import'
 require 'sc/billing/transform'
 require 'sc/billing/find_or_raise'
+require 'sc/billing/constants'
 
 module SC
   module Billing
@@ -24,6 +25,11 @@ module SC
     setting(:custom_event_handlers, {}, reader: true)
     setting(:available_events, [], reader: true)
     setting(:event_hooks, {}, reader: true)
+    setting(:registration_source, reader: true) do
+      setting(:follow?, false)
+      setting(:enum_name, '')
+      setting(:field_name, '')
+    end
 
     class << self
       def user_model

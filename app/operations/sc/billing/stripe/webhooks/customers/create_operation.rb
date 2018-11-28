@@ -20,10 +20,18 @@ module SC::Billing::Stripe::Webhooks::Customers
     end
 
     def create_user(customer_data)
-      user_model.create(
+      input = {
         stripe_customer_id: customer_data.id,
         email: customer_data.email
-      )
+      }
+
+      if SC::Billing.registration_source.follow?
+        input[
+          SC::Billing.registration_source.field_name.to_sym
+        ] = SC::Billing::Constants::USERS_CREATED_IN_STRIPE_TYPE
+      end
+
+      user_model.create(input)
     end
 
     def find_user_by_email(email)
