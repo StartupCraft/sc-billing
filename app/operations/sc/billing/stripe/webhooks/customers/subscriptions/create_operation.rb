@@ -14,7 +14,7 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
       raise_if_user_not_found(user, customer_id)
 
       create_subscription(user, subscription_data).tap do |subscription|
-        run_after_hook(subscription: subscription)
+        run_after_hook(subscription: subscription, event: event)
       end
     end
 
