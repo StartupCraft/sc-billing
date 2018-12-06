@@ -21,7 +21,8 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
     private
 
     def create_subscription(user, subscription_data)
-      return if subscription_exists?(subscription_data.id)
+      subscription = find_subscription(subscription_data.id)
+      return subscription if subscription
 
       plans = find_plans(subscription_data)
       try_to_find_products(subscription_data)
@@ -34,8 +35,8 @@ module SC::Billing::Stripe::Webhooks::Customers::Subscriptions
       )
     end
 
-    def subscription_exists?(stripe_id)
-      !::SC::Billing::Stripe::Subscription.where(stripe_id: stripe_id).empty?
+    def find_subscription(stripe_id)
+      ::SC::Billing::Stripe::Subscription.first(stripe_id: stripe_id)
     end
 
     def find_entities_by_stripe_ids(type:, stripe_ids:)
