@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ffaker', '~> 2.10'
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'rspec-rails', '~> 3.7'
-  s.add_development_dependency 'rubocop', '~> 0.58'
+  s.add_development_dependency 'rubocop', '0.61'
   s.add_development_dependency 'rubocop-rspec', '~> 1.27'
   s.add_development_dependency 'sequel-rails', '~> 1.0'
   s.add_development_dependency 'stripe-ruby-mock', '2.5.4'
