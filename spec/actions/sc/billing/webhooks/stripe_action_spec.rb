@@ -14,6 +14,23 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
   end
 
   describe 'events' do
+    shared_examples_for 'executes proper operation by webhook' do |event_name:, operation_class:|
+      let(:event) { StripeMock.mock_webhook_event(event_name) }
+      let(:operation) { instance_double(operation_class) }
+
+      before do
+        allow(operation_class).to(
+          receive(:new).and_return(operation)
+        )
+        allow(operation).to receive(:call)
+      end
+
+      it 'execute proper operation', :aggregate_failures do
+        expect(result).to be_success
+        expect(operation).to have_received(:call).with(event)
+      end
+    end
+
     around do |example|
       StripeMock.start
 
@@ -110,282 +127,139 @@ RSpec.describe SC::Billing::Webhooks::StripeAction do
     end
 
     context 'when event is customer.created' do
-      let(:event) { StripeMock.mock_webhook_event('customer.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::CreateOperation).to receive(:new).and_return(operation)
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.created',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::CreateOperation
+      )
     end
 
     context 'when event is customer.updated' do
-      let(:event) { StripeMock.mock_webhook_event('customer.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::UpdateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::UpdateOperation).to receive(:new).and_return(operation)
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.updated',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::UpdateOperation
+      )
     end
 
     context 'when event is product.created' do
-      let(:event) { StripeMock.mock_webhook_event('product.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Products::CreateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Products::CreateOperation).to receive(:new).and_return(operation)
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'product.created',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Products::CreateOperation
+      )
     end
 
     context 'when event is plan.created' do
-      let(:event) { StripeMock.mock_webhook_event('plan.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Plans::CreateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Plans::CreateOperation).to receive(:new).and_return(operation)
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'plan.created',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Plans::CreateOperation
+      )
     end
 
     context 'when event is plan.updated' do
-      let(:event) { StripeMock.mock_webhook_event('plan.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Plans::UpdateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Plans::UpdateOperation).to receive(:new).and_return(operation)
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'plan.updated',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Plans::UpdateOperation
+      )
     end
 
     context 'when event is customer.source.created' do
-      let(:event) { StripeMock.mock_webhook_event('customer.source.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.source.created',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::Sources::CreateOperation
+      )
     end
 
     context 'when event is customer.source.updated' do
-      let(:event) { StripeMock.mock_webhook_event('customer.source.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.source.updated',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::Sources::UpdateOperation
+      )
     end
 
     context 'when event is customer.source.deleted' do
-      let(:event) { StripeMock.mock_webhook_event('customer.source.deleted') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.source.deleted',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::Sources::DeleteOperation
+      )
     end
 
     context 'when event is customer.subscription.created' do
-      let(:event) { StripeMock.mock_webhook_event('customer.subscription.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.subscription.created',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::CreateOperation
+      )
     end
 
     context 'when event is customer.subscription.updated' do
-      let(:event) { StripeMock.mock_webhook_event('customer.subscription.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.subscription.updated',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::UpdateOperation
+      )
     end
 
     context 'when event is customer.subscription.deleted' do
-      let(:event) { StripeMock.mock_webhook_event('customer.subscription.deleted') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'customer.subscription.deleted',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Customers::Subscriptions::DeleteOperation
+      )
     end
 
     context 'when event is invoice.created' do
-      let(:event) { StripeMock.mock_webhook_event('invoice.created') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Invoices::CreateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Invoices::CreateOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'invoice.created',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Invoices::CreateOperation
+      )
     end
 
     context 'when event is invoice.updated' do
-      let(:event) { StripeMock.mock_webhook_event('invoice.updated') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Invoices::UpdateOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Invoices::UpdateOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'invoice.updated',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Invoices::UpdateOperation
+      )
     end
 
     context 'when event is invoice.payment_succeeded' do
-      let(:event) { StripeMock.mock_webhook_event('invoice.payment_succeeded') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Invoices::PaymentSucceededOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Invoices::PaymentSucceededOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'invoice.payment_succeeded',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Invoices::PaymentSucceededOperation
+      )
     end
 
     context 'when event is charge.pending' do
-      let(:event) { StripeMock.mock_webhook_event('charge.pending') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Charges::PendingOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Charges::PendingOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'charge.pending',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Charges::PendingOperation
+      )
     end
 
     context 'when event is charge.succeeded' do
-      let(:event) { StripeMock.mock_webhook_event('charge.succeeded') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Charges::SucceededOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Charges::SucceededOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'charge.succeeded',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Charges::SucceededOperation
+      )
     end
 
     context 'when event is charge.failed' do
-      let(:event) { StripeMock.mock_webhook_event('charge.failed') }
-      let(:operation) { instance_double(::SC::Billing::Stripe::Webhooks::Charges::FailedOperation) }
-
-      before do
-        allow(::SC::Billing::Stripe::Webhooks::Charges::FailedOperation).to(
-          receive(:new).and_return(operation)
-        )
-        allow(operation).to receive(:call)
-      end
-
-      it 'execute proper operation', :aggregate_failures do
-        expect(result).to be_success
-        expect(operation).to have_received(:call).with(event)
-      end
+      it_behaves_like(
+        'executes proper operation by webhook',
+        event_name: 'charge.failed',
+        operation_class: ::SC::Billing::Stripe::Webhooks::Charges::FailedOperation
+      )
     end
   end
 end
