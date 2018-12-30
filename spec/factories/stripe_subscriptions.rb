@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :stripe_subscription, class: 'SC::Billing::Stripe::Subscription' do
     to_create(&:save)
 
-    user
+    association :user, factory: SC::Billing.user_factory
     stripe_id { SecureRandom.hex }
     status { 'active' }
     current_period_start_at { FFaker::Time.datetime.to_datetime }

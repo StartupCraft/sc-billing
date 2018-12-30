@@ -22,6 +22,7 @@ module SC
     setting(:stripe_api_key, reader: true) { |value| Stripe.api_key = value }
     setting(:stripe_webhook_secret, reader: true)
     setting(:user_model_name, reader: true)
+    setting(:user_factory, :user, reader: true)
     setting(:custom_event_handlers, {}, reader: true)
     setting(:available_events, [], reader: true)
     setting(:event_hooks, {}, reader: true)
