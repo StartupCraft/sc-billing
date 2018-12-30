@@ -23,6 +23,10 @@ module SC::Billing
         register 'plan' do
           ::SC::Billing::Stripe::Plan
         end
+
+        register 'charge' do
+          ::SC::Billing::Stripe::Charge
+        end
       end
     end
   end
