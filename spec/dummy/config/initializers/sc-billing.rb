@@ -19,6 +19,9 @@ SC::Billing.configure do |config|
     'customer.subscription.deleted',
     'invoice.created',
     'invoice.updated',
-    'invoice.payment_succeeded'
+    'invoice.payment_succeeded',
+    'charge.pending',
+    'charge.succeeded',
+    'charge.failed'
   ]
 end
