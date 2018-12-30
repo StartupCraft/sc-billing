@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :stripe_charge, class: 'SC::Billing::Stripe::Charge' do
     to_create(&:save)
 
-    user
+    association :user, factory: SC::Billing.user_factory
 
     stripe_id { SecureRandom.hex }
     stripe_data { {} }

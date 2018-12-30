@@ -8,6 +8,6 @@ FactoryBot.define do
     type { 'card' }
     status { 'chargeable' }
     stripe_id { SecureRandom.hex }
-    user
+    association :user, factory: SC::Billing.user_factory
   end
 end
