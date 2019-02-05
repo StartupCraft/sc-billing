@@ -25,6 +25,8 @@ Sequel.migration do
       String :failure_code
       String :failure_message
 
+      String :additional_attr
+
       DateTime :created_at, null: false, default: Sequel::CURRENT_TIMESTAMP
       DateTime :updated_at, null: false, default: Sequel::CURRENT_TIMESTAMP
 
